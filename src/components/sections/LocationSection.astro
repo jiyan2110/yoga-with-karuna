@@ -1,0 +1,80 @@
+---
+import { siteConfig } from '../../config/site-content';
+import ButtonCTA from '../ui/ButtonCTA.astro';
+
+const locationDraft = "Hi Karuna, I would like to visit your yoga studio in Anand. Could you let me know the best time to stop by or schedule a trial?";
+---
+
+<section id="location" class="py-16 md:py-24 bg-[#FAF9F6] scroll-mt-20">
+  <div class="mx-auto max-w-[1200px] px-6">
+    
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
+      
+      <!-- Left Column: Address & Preparation Info -->
+      <div class="lg:col-span-5">
+        <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#4A6B5D] mb-3">
+          <span>Practice Space</span>
+        </div>
+        <h2 class="font-serif text-3xl font-bold tracking-tight text-[#1A1A1A] sm:text-4xl">
+          Visit Our Peaceful Studio in {siteConfig.location.city}
+        </h2>
+        <p class="mt-4 text-sm sm:text-base text-[#1A1A1A]/75">
+          Conveniently located in the heart of Anand. Our studio is fully ventilated, naturally lit, and equipped with hygienic wooden floors.
+        </p>
+
+        <!-- Address Card -->
+        <div class="mt-8 rounded-xl bg-white p-6 border border-[#4A6B5D]/20 shadow-sm space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="text-xl">📍</span>
+            <div>
+              <p class="font-bold text-sm text-[#1A1A1A]">{siteConfig.location.addressLine1}</p>
+              <p class="text-xs text-[#1A1A1A]/75">{siteConfig.location.addressLine2}</p>
+              <p class="text-xs font-semibold text-[#4A6B5D] mt-1">Landmark: {siteConfig.location.landmark}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- First Class Checklist -->
+        <div class="mt-6">
+          <p class="text-xs font-bold uppercase tracking-wider text-[#1A1A1A]/60 mb-2">
+            What to bring for your first visit:
+          </p>
+          <ul class="text-xs sm:text-sm text-[#1A1A1A]/80 space-y-1.5 list-disc list-inside">
+            <li>Your personal non-slip yoga mat</li>
+            <li>Comfortable, breathable cotton workout wear</li>
+            <li>Avoid heavy meals 2 hours prior to practice</li>
+          </ul>
+        </div>
+
+        <!-- Direct Direction CTA -->
+        <div class="mt-8">
+          <ButtonCTA 
+            label="Message for Directions & Studio Visit" 
+            customDraft={locationDraft}
+            variant="whatsapp"
+            className="w-full sm:w-auto text-xs sm:text-sm"
+          />
+        </div>
+
+      </div>
+
+      <!-- Right Column: Lazy Loaded Google Map Embed -->
+      <div class="lg:col-span-7">
+        <div class="aspect-[16/10] sm:aspect-[16/9] w-full rounded-2xl overflow-hidden border-2 border-[#4A6B5D]/20 shadow-lg bg-white p-1.5">
+          <iframe
+            src={siteConfig.location.googleMapsEmbedUrl}
+            width="100%"
+            height="100%"
+            style="border:0; border-radius: 12px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title={`Map location of ${siteConfig.brand.name} studio in ${siteConfig.location.city}`}
+          ></iframe>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,20 @@
+---
+import { siteConfig } from '../../config/site-content';
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-[#1A1A1A] text-white py-12 border-t border-white/10">
+  <div class="mx-auto max-w-[1200px] px-6 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+    
+    <div>
+      <p class="font-serif text-lg font-bold tracking-tight">{siteConfig.brand.name}</p>
+      <p class="text-xs text-white/60 mt-1">{siteConfig.brand.tagline} &bull; {siteConfig.location.city}, Gujarat</p>
+    </div>
+
+    <div class="text-xs text-white/50 space-y-1">
+      <p>&copy; {currentYear} {siteConfig.brand.name}. All rights reserved.</p>
+      <p class="text-[10px]">Built for high-conversion offline enrollment.</p>
+    </div>
+
+  </div>
+</footer>

@@ -1,0 +1,66 @@
+---
+import type { ClassOffering } from '../../config/site-content';
+import ButtonCTA from './ButtonCTA.astro';
+
+interface Props {
+  offering: ClassOffering;
+}
+
+const { offering } = Astro.props;
+---
+
+<div class="reveal-on-scroll group flex flex-col justify-between rounded-2xl border border-[#4A6B5D]/15 bg-white/90 p-6 sm:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.03)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-[#4A6B5D]/40 hover:shadow-[0_12px_30px_rgba(74,107,93,0.12)]">
+  
+  <div>
+    <!-- Level Badge & Timing Header -->
+    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-black/5 pb-4">
+      <span class="inline-flex items-center rounded-full bg-[#4A6B5D]/10 px-3 py-1 text-xs font-bold text-[#4A6B5D] transition-colors group-hover:bg-[#4A6B5D] group-hover:text-white">
+        {offering.level}
+      </span>
+      <div class="text-right">
+        <p class="text-sm font-bold text-[#1A1A1A]">{offering.timing}</p>
+        <p class="text-[11px] font-semibold text-[#1A1A1A]/50">{offering.days}</p>
+      </div>
+    </div>
+
+    <!-- Class Title -->
+    <h3 class="font-serif text-2xl font-bold text-[#1A1A1A] mt-5 group-hover:text-[#4A6B5D] transition-colors">
+      {offering.name}
+    </h3>
+
+    <!-- Description -->
+    <p class="mt-3 text-sm leading-relaxed text-[#1A1A1A]/75">
+      {offering.description}
+    </p>
+
+    <!-- Key Benefits List -->
+    <div class="mt-6">
+      <p class="text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A]/40 mb-3">
+        Key Practice Benefits
+      </p>
+      <ul class="space-y-2.5">
+        {offering.benefits.map((benefit) => (
+          <li class="flex items-start gap-2.5 text-xs sm:text-sm font-medium text-[#1A1A1A]/90">
+            <div class="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#25D366]/15 text-[#25D366]">
+              <svg class="h-3 w-3 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span>{benefit}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Contextual WhatsApp Action Button -->
+  <div class="mt-8 pt-6 border-t border-black/5">
+    <ButtonCTA 
+      label="Inquire About This Batch" 
+      customDraft={offering.whatsappDraft}
+      variant="whatsapp"
+      className="w-full text-xs sm:text-sm shadow-none hover:shadow-md"
+    />
+  </div>
+
+</div>

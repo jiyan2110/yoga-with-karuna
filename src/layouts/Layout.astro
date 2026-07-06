@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+import { siteConfig } from '../config/site-content';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = siteConfig.seo.title, 
+  description = siteConfig.seo.description 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.url.href} />
+
+    <!-- OpenGraph / WhatsApp Link Preview Engine -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/assets/images/karuna-og-preview.jpg" />
+
+    <!-- Typography Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  </head>
+
+  <body class="bg-[#FAF9F6] text-[#1A1A1A] font-sans antialiased selection:bg-[#4A6B5D] selection:text-white">
+    <!-- WCAG 2.1 AA Keyboard Accessibility Shortcut -->
+    <a 
+      href="#main-content" 
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-3 focus:bg-[#4A6B5D] focus:text-white focus:font-medium focus:rounded-md focus:shadow-xl"
+    >
+      Skip to main content
+    </a>
+
+    <slot />
+
+  </body>
+</html>

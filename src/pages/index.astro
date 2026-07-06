@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import BioSection from '../components/sections/BioSection.astro';
+import OfferingsSection from '../components/sections/OfferingsSection.astro';
+import TestimonialsSection from '../components/sections/TestimonialsSection.astro';
+import LocationSection from '../components/sections/LocationSection.astro';
+import Footer from '../components/layout/Footer.astro';
+import FloatingWhatsApp from '../components/ui/FloatingWhatsApp.astro';
+---
+
+<Layout>
+  <Header />
+
+  <main id="main-content">
+    <HeroSection />
+    <BioSection />
+    <OfferingsSection />
+    <TestimonialsSection />
+    <LocationSection />
+  </main>
+
+  <Footer />
+  <FloatingWhatsApp />
+</Layout>
+
+<script>
+  // Native Intersection Observer: Zero dependencies, 60fps performance
+  const observerCallback: IntersectionObserverCallback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target); // Trigger only once per load
+      }
+    });
+  };
+
+  const observerOptions: IntersectionObserverInit = {
+    root: null,
+    rootMargin: '0px 0px -60px 0px',
+    threshold: 0.15
+  };
+
+  const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+  // Attach observer to elements after DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    revealElements.forEach((el) => scrollObserver.observe(el));
+  });
+</script>
