@@ -3,36 +3,29 @@ import { siteConfig } from '../../config/site-content';
 import ClassCard from '../ui/ClassCard.astro';
 ---
 
-<section id="offerings" class="py-16 md:py-24 bg-[#FAF9F6] scroll-mt-20">
-  <div class="mx-auto max-w-[1200px] px-6">
+<section id="offerings" class="py-16 md:py-24 bg-[#FCFDFE] scroll-mt-20">
+  <div class="mx-auto max-w-[1380px] px-4 sm:px-6 md:px-10">
     
-    <!-- Section Heading -->
     <div class="reveal-on-scroll max-w-2xl mx-auto text-center mb-12 md:mb-16">
-      <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#4A6B5D] mb-3">
-        <span class="h-px w-6 bg-[#4A6B5D]"></span>
-        <span>Daily Studio Schedule</span>
-        <span class="h-px w-6 bg-[#4A6B5D]"></span>
+      <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#832676] mb-3">
+        <span class="h-px w-6 bg-[#832676]"></span>
+        <!-- 🎨 REFINED: Changed "Studio" to "Class" -->
+        <span>Daily Class Schedule</span>
+        <span class="h-px w-6 bg-[#832676]"></span>
       </div>
-      <h2 class="font-serif text-3xl font-bold tracking-tight text-[#1A1A1A] sm:text-4xl">
-        Find Your Ideal Offline Batch in {siteConfig.location.city}
+      <!-- 🎨 REFINED: Simplified and Captivating H2 -->
+      <h2 class="font-serif text-3xl font-bold tracking-tight text-[#1E1B5D] sm:text-4xl">
+        Find Your Perfect Online Yoga Class
       </h2>
-      <p class="mt-4 text-sm sm:text-base text-[#1A1A1A]/75">
-        Choose a dedicated time for your personal wellness. All batches are conducted in-person with hands-on posture alignment and personal supervision.
+      <p class="mt-4 text-sm sm:text-base text-[#1E1B5D]/80">
+        Choose a dedicated time for your personal wellness. All classes are conducted live online via Google Meet with hands-on posture guidance and personal supervision.
       </p>
     </div>
 
-    <!-- Responsive Class Grid -->
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 items-stretch">
       {siteConfig.classes.map((offering) => (
         <ClassCard offering={offering} />
       ))}
-    </div>
-
-    <!-- Bottom Reassurance Banner -->
-    <div class="mt-12 rounded-xl bg-[#4A6B5D]/10 border border-[#4A6B5D]/20 p-6 text-center max-w-3xl mx-auto">
-      <p class="text-xs sm:text-sm font-medium text-[#1A1A1A]">
-        💡 <strong class="font-bold">Not sure which batch suits your current fitness level?</strong> Send Karuna a quick message on WhatsApp discussing your routine or any physical stiffness, and she will recommend the best batch for you.
-      </p>
     </div>
 
   </div>

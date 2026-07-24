@@ -5,20 +5,18 @@ const encodedMessage = encodeURIComponent(siteConfig.whatsapp.defaultDraft);
 const targetUrl = `https://wa.me/${siteConfig.whatsapp.phoneDigits}?text=${encodedMessage}`;
 ---
 
-<div class="fixed bottom-6 right-6 z-50 flex items-center group">
-  <!-- Glowing pulse background effect -->
-  <div class="absolute -inset-1 rounded-full bg-[#25D366] opacity-40 blur animate-pulse group-hover:opacity-75 transition duration-300"></div>
-  
+<div class="fixed bottom-6 right-6 z-50 flex items-center">
   <a
     href={targetUrl}
     target="_blank"
     rel="noopener noreferrer"
-    class="relative flex items-center gap-2.5 rounded-full bg-[#25D366] p-4 sm:px-6 sm:py-4 text-white shadow-2xl transition-all duration-300 hover:bg-[#20ba5a] hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366]"
+    class="flex h-14 w-14 items-center justify-center rounded-full bg-white border border-[#A08EB1]/20 shadow-[0_8px_30px_rgba(30,27,93,0.12)] transition-all duration-300 hover:scale-110 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366]"
     aria-label="Chat directly with Karuna on WhatsApp"
   >
-    <svg class="h-6 w-6 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.414 2.56 1.201 3.633l-.841 3.072 3.146-.826c1.037.728 2.296 1.15 3.627 1.15 3.183 0 5.769-2.586 5.77-5.767 0-3.181-2.587-5.768-5.768-5.768zm0 13.064c-1.12 0-2.217-.354-3.136-.988l-.225-.155-2.331.611.621-2.271-.166-.264c-.694-1.102-1.061-2.381-1.06-3.703.001-3.811 3.102-6.912 6.914-6.912 3.812 0 6.914 3.102 6.914 6.913 0 3.812-3.102 6.913-6.914 6.913zm3.785-5.181c-.207-.104-1.228-.606-1.418-.675-.19-.069-.328-.104-.467.104-.138.207-.536.675-.658.814-.121.138-.242.156-.449.052-.207-.104-.874-.322-1.666-1.028-.616-.55-1.033-1.229-1.154-1.437-.121-.207-.013-.319.091-.423.094-.093.207-.242.311-.363.104-.121.138-.207.207-.346.069-.138.035-.259-.017-.363-.052-.104-.467-1.125-.64-1.539-.168-.403-.339-.348-.467-.354-.121-.006-.259-.007-.397-.007-.138 0-.363.052-.553.259-.19.207-.726.709-.726 1.729 0 1.02.744 2.006.848 2.145.104.138 1.464 2.235 3.548 3.135.496.214.883.342 1.184.438.498.159.952.136 1.311.082.403-.06 1.228-.501 1.401-.986.173-.485.173-.901.121-.986-.052-.086-.19-.138-.397-.242z"/>
+    <!-- WhatsApp (Simple Icons) -->
+    <svg class="h-7 w-7 text-[#25D366] fill-current" viewBox="0 0 24 24" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg">
+      <title>WhatsApp</title>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
     </svg>
-    <span class="hidden sm:inline font-bold text-xs tracking-wider uppercase">Message Karuna</span>
   </a>
 </div>

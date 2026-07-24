@@ -2,101 +2,94 @@
 import { siteConfig } from '../../config/site-content';
 import ButtonCTA from '../ui/ButtonCTA.astro';
 
-const heroDraft = "Hi Karuna, I would like to join your offline yoga studio classes in Anand. Please share batch timings and enrollment details.";
+const heroDraft = "Hi Karuna, I would like to join your online women-only yoga community. Please share enrollment details.";
 ---
 
-<section class="relative overflow-hidden pt-8 pb-16 md:pt-16 md:pb-24 lg:pb-32">
-  <!-- Subtle background ambient highlight -->
-  <div class="pointer-events-none absolute top-0 right-1/4 -z-10 h-96 w-96 rounded-full bg-[#4A6B5D]/10 blur-3xl" aria-hidden="true"></div>
+<section class="relative isolate z-0 overflow-hidden pt-8 pb-16 md:pt-16 md:pb-24 lg:pb-32 bg-[#FCFDFE]">
+  
+  <div class="pointer-events-none absolute inset-0 z-[-1] overflow-hidden" aria-hidden="true">
+    <img 
+      src="/assets/images/hero-ambient-bg.webp" 
+      alt="" 
+      class="h-full w-full object-cover object-center opacity-40 blur-1g scale-110"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-[#FCFDFE]/30 via-transparent to-[#FCFDFE]"></div>
+  </div>
 
-  <div class="mx-auto max-w-[1200px] px-6">
-    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center lg:gap-8">
+  <div class="mx-auto max-w-[1380px] px-4 sm:px-6 md:px-10">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center lg:gap-12">
       
-      <!-- Left Column: Copy & CTAs -->
-      <div class="flex flex-col items-start lg:col-span-7">
-        
-        <!-- Local Location & Authority Pill -->
-        <div class="inline-flex items-center gap-2 rounded-full border border-[#4A6B5D]/20 bg-[#4A6B5D]/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#4A6B5D] mb-6">
-          <span class="h-2 w-2 rounded-full bg-[#25D366] animate-pulse"></span>
-          Offline Studio in {siteConfig.location.city}, {siteConfig.location.region}
+      <div class="order-2 lg:order-1 lg:col-span-5 flex justify-center">
+        <div class="relative w-full max-w-md lg:max-w-none aspect-[4/5] rounded-[24px] bg-white p-3 border border-[#A08EB1]/30 shadow-[0_10px_40px_rgba(30,27,93,0.06)] overflow-hidden">
+          <div class="h-full w-full rounded-[18px] bg-[#FCFDFE] border border-[#A08EB1]/20 flex flex-col items-center justify-center text-center p-8 relative overflow-hidden group">
+            <div class="absolute inset-0 bg-[#A08EB1]/10 flex items-center justify-center">
+              <span class="text-6xl select-none opacity-30">🧘‍♀️</span>
+            </div>
+            <p class="relative z-10 font-serif text-lg font-bold text-[#832676]">
+              {siteConfig.instructor.name}
+            </p>
+            <p class="relative z-10 text-xs text-[#1E1B5D]/70 mt-1 max-w-[200px]">
+              [Hero Image Placeholder]
+            </p>
+          </div>
+
+          <div class="absolute bottom-6 -left-2 sm:left-4 rounded-[16px] bg-white p-4 shadow-[0_8px_25px_rgba(30,27,93,0.1)] border border-[#A08EB1]/20 flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#1E1B5D] text-white font-serif font-bold text-sm">
+              ✨
+            </div>
+            <div>
+              <p class="text-xs font-bold text-[#1E1B5D]">Women-Only Sanctuary</p>
+              <p class="text-[10px] text-[#1E1B5D]/70">Safe & Supportive Community</p>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Localized H1 -->
-        <h1 class="font-serif text-4xl font-bold leading-tight text-[#1A1A1A] sm:text-5xl lg:text-6xl">
-          Transform Your Body & Mind With <span class="text-[#4A6B5D] italic">{siteConfig.location.city}'s</span> Most Awarded Yoga Expert.
+      <div class="order-1 lg:order-2 flex flex-col items-start lg:col-span-7">
+        
+        <!-- 🎨 REFINED: Large Hindi Tagline and English Sub-tagline -->
+        <h1 class="font-serif text-5xl font-bold leading-tight text-[#832676] sm:text-6xl mb-4">
+          {siteConfig.brand.tagline}
         </h1>
+        <h2 class="text-xl sm:text-2xl font-serif font-semibold text-[#1E1B5D] mb-6">
+          {siteConfig.brand.subTagline}
+        </h2>
 
-        <!-- Value Proposition Subheadline -->
-        <p class="mt-6 text-base leading-relaxed text-[#1A1A1A]/80 sm:text-lg max-w-2xl">
-          Experience authentic Hatha & Ashtanga yoga under the personal guidance of **Karuna** — an {siteConfig.instructor.title} with over {siteConfig.instructor.experienceYears} years of teaching experience. Step away from screens and join a dedicated physical practice built for lasting wellness.
+        <!-- 🎨 REFINED: Cleaned up language, no m-dashes, simple and direct. -->
+        <p class="mt-2 text-base leading-relaxed text-[#1E1B5D]/80 sm:text-lg max-w-2xl">
+          Here, yoga is not just a workout. It is a journey of transformation. Join a sanctuary created exclusively for women. This is a space where you can pause, breathe, heal, and reconnect with your true self under the guidance of a US Alliance certified yoga teacher.
         </p>
 
-        <!-- CTA Action Area -->
         <div class="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
           <ButtonCTA 
-            label="Inquire About Classes on WhatsApp" 
+            label="Inquire About Classes" 
             customDraft={heroDraft}
-            variant="whatsapp"
+            variant="primary"
             className="w-full sm:w-auto"
           />
           <a 
             href="#offerings" 
-            class="inline-flex items-center justify-center rounded-xl px-6 py-4 text-sm font-semibold text-[#1A1A1A] transition-colors hover:text-[#4A6B5D] focus-visible:outline-2 focus-visible:outline-[#4A6B5D]"
+            class="inline-flex items-center justify-center rounded-[14px] border-2 border-[#1E1B5D] px-6 py-4 text-sm font-semibold text-[#1E1B5D] transition-all duration-300 hover:bg-[#1E1B5D] hover:text-white focus-visible:outline-2 focus-visible:outline-[#1E1B5D]"
           >
-            View Batch Timings &rarr;
+            View Online Classes &rarr;
           </a>
         </div>
 
-        <!-- Quick Trust Markers Below CTA -->
-        <div class="mt-12 grid grid-cols-3 gap-6 border-t border-[#1A1A1A]/10 pt-8 w-full max-w-lg">
+        <div class="mt-12 grid grid-cols-3 gap-6 border-t border-[#A08EB1]/20 pt-8 w-full max-w-lg">
           <div>
-            <p class="font-serif text-2xl font-bold text-[#1A1A1A]">8x</p>
-            <p class="text-xs font-medium text-[#1A1A1A]/60 mt-0.5">World Records</p>
+            <p class="font-serif text-2xl font-bold text-[#1E1B5D]">{siteConfig.instructor.experienceYears} Yrs</p>
+            <p class="text-xs font-medium text-[#1E1B5D]/70 mt-0.5">Teaching Experience</p>
           </div>
           <div>
-            <p class="font-serif text-2xl font-bold text-[#1A1A1A]">12+ Yrs</p>
-            <p class="text-xs font-medium text-[#1A1A1A]/60 mt-0.5">Teaching Experience</p>
+            <p class="font-serif text-2xl font-bold text-[#1E1B5D]">100%</p>
+            <p class="text-xs font-medium text-[#1E1B5D]/70 mt-0.5">Women-Only Community</p>
           </div>
           <div>
-            <p class="font-serif text-2xl font-bold text-[#1A1A1A]">100%</p>
-            <p class="text-xs font-medium text-[#1A1A1A]/60 mt-0.5">In-Person & Local</p>
+            <p class="font-serif text-2xl font-bold text-[#1E1B5D]">Live</p>
+            <p class="text-xs font-medium text-[#1E1B5D]/70 mt-0.5">Online Sessions</p>
           </div>
         </div>
 
-      </div>
-
-      <!-- Right Column: Visual Frame -->
-      <div class="lg:col-span-5 flex justify-center">
-        <div class="relative w-full max-w-md lg:max-w-none aspect-[4/5] rounded-2xl bg-gradient-to-tr from-[#4A6B5D]/20 to-transparent p-2.5 border border-[#4A6B5D]/15 shadow-xl overflow-hidden">
-          
-          <!-- Image Placeholder / Container -->
-          <div class="h-full w-full rounded-xl bg-[#4A6B5D]/10 flex flex-col items-center justify-center text-center p-8 relative overflow-hidden group">
-            
-            <!-- Note: When real image is ready, replace this inner div with standard <img> tag -->
-            <div class="absolute inset-0 bg-[#4A6B5D]/5 flex items-center justify-center">
-              <span class="text-6xl select-none opacity-20">🧘‍♀️</span>
-            </div>
-            
-            <p class="relative z-10 font-serif text-lg font-semibold text-[#4A6B5D]">
-              Karuna
-            </p>
-            <p class="relative z-10 text-xs text-[#1A1A1A]/60 mt-1 max-w-[200px]">
-              [Hero Image Placeholder: Portrait of Karuna in traditional grounding posture]
-            </p>
-          </div>
-
-          <!-- Floating Experience Badge Overlay -->
-          <div class="absolute bottom-6 -left-2 sm:left-4 rounded-xl bg-white/95 backdrop-blur-md p-4 shadow-lg border border-black/5 flex items-center gap-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#4A6B5D] text-white font-serif font-bold text-sm">
-              🏆
-            </div>
-            <div>
-              <p class="text-xs font-bold text-[#1A1A1A]">Certified Yoga Acharya</p>
-              <p class="text-[10px] text-[#1A1A1A]/70">Direct Guidance & Feedback</p>
-            </div>
-          </div>
-
-        </div>
       </div>
 
     </div>

@@ -6,7 +6,6 @@ export interface NavLink {
 export interface Credential {
   title: string;
   issuer: string;
-  year?: string;
 }
 
 export interface ClassOffering {
@@ -17,13 +16,13 @@ export interface ClassOffering {
   days: string;
   description: string;
   benefits: string[];
-  whatsappDraft: string;
+  formLink: string;
 }
 
 export interface Testimonial {
   id: string;
   studentName: string;
-  locality: string; // Hyper-local proof (e.g., Vallabh Vidyanagar, Mota Bazaar)
+  locality: string; 
   batchJoined: string;
   reviewText: string;
   monthsPracticing: string;
@@ -40,15 +39,11 @@ export interface SiteConfig {
   brand: {
     name: string;
     tagline: string;
+    subTagline: string;
   };
-  location: {
-    city: string;
-    region: string;
-    country: string;
-    addressLine1: string;
-    addressLine2: string;
-    landmark: string;
-    googleMapsEmbedUrl: string;
+  social: {
+    instagram: string;
+    facebook: string;
   };
   whatsapp: {
     phoneDigits: string;
@@ -66,115 +61,113 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   instructor: {
     name: "Karuna",
-    title: "8x World Record Breaker & Lead Yoga Acharya",
-    experienceYears: "12+",
+    title: "US Alliance (Yoga Alliance) Certified Yoga Teacher",
+    experienceYears: "4+",
     bioParagraphs: [
-      "Yoga is not about touching your toes; it is about what you learn on the way down. For over 12 years, I have dedicated my life to mastering and teaching the traditional, unadulterated sciences of Hatha and Ashtanga Yoga.",
-      "Having achieved 8 World Records in advanced yogic postures and sustained physical endurance, my mission now is bringing this profound physical and mental discipline back to our local community in Anand. In an era dominated by impersonal online fitness videos, I firmly believe that true transformation happens in person—through direct observation, physical breath alignment, and personalized corrections."
+      "In a world that expects women to be everything for everyone, it's easy to forget yourself. Yoga With Karuna is a sanctuary created exclusively for women—a space where you can pause, breathe, heal, and reconnect with your true self.",
+      "Rooted in the timeless wisdom of India's ancient Rishi tradition and inspired by the harmony and mindfulness of Eastern cultures, our classes are designed to nurture not only the body but also the mind and soul.",
+      "My mission is to help women become stronger, healthier, happier, and more connected to themselves."
     ],
     credentials: [
-      { title: "8x World Record Holder", issuer: "International Yogic Endurance & Posture" },
-      { title: "Lead Yoga Acharya (500-Hr RYT)", issuer: "Traditional Hatha Lineage" },
-      { title: "Certified Advanced Alignment Specialist", issuer: "National Yoga Therapy Board" },
-      { title: "12+ Years Offline Studio Training", issuer: "Over 2,500+ Local Students Guided" }
+      { title: "US Alliance Certified", issuer: "Yoga Alliance" },
+      { title: "Online Yoga Classes", issuer: "Global Women's Community" },
+      { title: "Gym & Fitness Training", issuer: "Physical Conditioning" },
+      { title: "Corporate Sessions", issuer: "Workplace Harmony" }
     ]
   },
   brand: {
-    name: "Yoga with Karuna",
-    tagline: "Traditional Hatha & Ashtanga for Modern Living",
+    name: "Yoga With Karuna",
+    tagline: "अहमस्मि योद्धा",
+    subTagline: "Awaken the Warrior Within. Embrace the Peace Within.",
   },
-  location: {
-    city: "Anand",
-    region: "Gujarat",
-    country: "India",
-    addressLine1: "2nd Floor, Harmony Wellness Hub",
-    addressLine2: "Near Town Hall, AV Road",
-    landmark: "Above HDFC Bank, Anand",
-    // Standard embed pointing to Anand, Gujarat (Replace with her exact studio pin URL later)
-    googleMapsEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58980.08204847363!2d72.92383832168944!3d22.556012497672224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e4e74c03b7749%3A0xab364c66fd4834c!2sAnand%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin"
+  social: {
+    instagram: "https://www.instagram.com/yoga_with_karuna",
+    facebook: "https://www.facebook.com/share/17TBweDcYX/"
   },
   whatsapp: {
-    phoneDigits: "917045355862",
-    defaultDraft: "Hi Karuna, I visited your website and would like to inquire about your upcoming yoga batches in Anand.",
+    phoneDigits: "919662872510",
+    defaultDraft: "Hi Karuna, I am interested in joining your online yoga sanctuary.",
   },
   seo: {
-    title: "Yoga with Karuna | Best Offline Yoga Classes in Anand",
-    description: "Transform your physical health and mental clarity with Anand's 8x World Record Breaking yoga instructor. Join daily morning & evening offline studio batches.",
+    title: "Yoga With Karuna | Women-Only Online Sanctuary",
+    description: "A sanctuary exclusively for women. Join Certified Yoga Teacher Karuna for live online Hatha, Ashtanga, and Meditation classes.",
   },
   nav: [
     { label: "About Karuna", href: "#authority" },
-    { label: "Class Batches", href: "#offerings" },
+    { label: "Online Classes", href: "#offerings" },
     { label: "Student Stories", href: "#reviews" },
-    { label: "Studio Location", href: "#location" },
   ],
   classes: [
     {
-      id: "morning-hatha",
-      name: "Traditional Hatha Morning Batch",
-      level: "Beginner & Intermediate",
-      timing: "6:00 AM – 7:15 AM",
+      id: "regular-batch",
+      name: "Regular Yoga Batch",
+      level: "Beginners to Intermediate",
+      timing: "6:30 PM – 7:30 PM",
       days: "Monday to Friday",
-      description: "Start your day grounded. Focused on classical physical postures (Asanas), deep pranayama breathing, and metabolic awakening.",
+      description: "Build strength, flexibility, balance, and body awareness in a supportive daily practice.",
       benefits: [
-        "Improves joint mobility and spine health",
-        "Regulates cortisol and mental anxiety",
-        "Builds foundational core strength"
+        "Improved Flexibility & Strength",
+        "Better Posture & Balance",
+        "Stress Relief & Relaxation",
+        "Weight Management Support"
       ],
-      whatsappDraft: "Hi Karuna, I am interested in joining the Traditional Hatha Morning Batch (6:00 AM – 7:15 AM). Are slots available for this month?"
+      formLink: "https://docs.google.com/forms/..." 
     },
     {
-      id: "evening-ashtanga",
-      name: "Dynamic Ashtanga Evening Batch",
-      level: "Intermediate & Advanced",
-      timing: "6:00 PM – 7:15 PM",
-      days: "Monday to Friday",
-      description: "An energetic, flow-based physical sequence designed to purge daily workplace stress, build cardiovascular stamina, and tone muscles.",
+      id: "meditation-yoga",
+      name: "Meditation Yoga",
+      level: "All Levels",
+      timing: "Check Schedule",
+      days: "Tuesday, Thursday & Saturday",
+      description: "Experience deep relaxation, mindfulness, and emotional balance with focused meditation.",
       benefits: [
-        "High-calorie burn & cardiovascular endurance",
-        "Deep muscular release after work hours",
-        "Enhanced mental focus and balance"
+        "Mental Calmness & Clarity",
+        "Better Sleep Quality",
+        "Reduced Anxiety & Stress",
+        "Emotional Healing & Balance"
       ],
-      whatsappDraft: "Hi Karuna, I am interested in joining the Dynamic Ashtanga Evening Batch (6:00 PM – 7:15 PM). Could you share enrollment details?"
+      formLink: "https://docs.google.com/forms/..."
     },
     {
-      id: "personal-therapy",
-      name: "1-on-1 Personalized Alignment & Therapy",
-      level: "All Levels & Special Needs",
-      timing: "Flexible Slots by Appointment",
-      days: "Monday to Saturday",
-      description: "Tailored private offline coaching specifically engineered for individuals dealing with chronic back pain, cervical issues, or stiff joints.",
+      id: "face-yoga",
+      name: "Face Yoga",
+      level: "Women of All Ages",
+      timing: "Check Schedule",
+      days: "Monday, Wednesday & Friday",
+      description: "Natural glow and radiance through targeted facial muscle toning and improved circulation.",
       benefits: [
-        "100% undivided instructor attention",
-        "Customized posture modifications",
-        "Safe recovery and posture rehabilitation"
+        "Natural Glow & Radiance",
+        "Toned Facial Muscles",
+        "Improved Blood Circulation",
+        "Youthful Appearance"
       ],
-      whatsappDraft: "Hi Karuna, I would like to inquire about 1-on-1 Personal Yoga Therapy sessions in Anand. Can we discuss my physical health requirements?"
+      formLink: "https://docs.google.com/forms/..."
     }
   ],
   testimonials: [
     {
       id: "rev-1",
       studentName: "Priya Patel",
-      locality: "Vallabh Vidyanagar",
-      batchJoined: "Morning Hatha Batch",
+      locality: "Online Student",
+      batchJoined: "Regular Yoga Batch",
       monthsPracticing: "8 Months",
-      reviewText: "Practicing offline under Karuna has completely cured my lower back stiffness from sitting at a desk all day. Online videos never corrected my posture, but Karuna's personal attention makes all the difference."
+      reviewText: "Practicing under Karuna has completely cured my lower back stiffness from sitting at a desk all day. Online videos never corrected my posture, but Karuna's personal attention makes all the difference."
     },
     {
       id: "rev-2",
       studentName: "Dr. Amit Shah",
-      locality: "AV Road, Anand",
-      batchJoined: "Personal Therapy",
+      locality: "Online Student",
+      batchJoined: "Meditation Yoga",
       monthsPracticing: "1 Year",
-      reviewText: "As a practicing physician, I truly appreciate how scientifically Karuna approaches physical alignment. Learning from a World Record breaker gives you confidence that you are in the safest hands possible."
+      reviewText: "I truly appreciate how scientifically Karuna approaches mental alignment. Learning from her gives you confidence that you are in the safest hands possible."
     },
     {
       id: "rev-3",
       studentName: "Sneha Desai",
-      locality: "Mota Bazaar",
-      batchJoined: "Evening Ashtanga Batch",
+      locality: "Online Student",
+      batchJoined: "Face Yoga",
       monthsPracticing: "6 Months",
-      reviewText: "The evening Ashtanga batch is the highlight of my weekday! The energy in the studio is incredible, and I have lost 6 KGs while gaining flexibility I never dreamed I could have."
+      reviewText: "The energy in the live sessions is incredible, and I have found a natural glow and flexibility I never dreamed I could have."
     }
   ]
 };

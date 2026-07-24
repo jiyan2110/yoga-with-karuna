@@ -3,17 +3,75 @@ import { siteConfig } from '../../config/site-content';
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-[#1A1A1A] text-white py-12 border-t border-white/10">
-  <div class="mx-auto max-w-[1200px] px-6 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+<footer class="bg-[#832676] text-white py-16 border-t border-white/10">
+  <!-- 🎨 REFINED: Widened container max-w-[1380px] -->
+  <div class="mx-auto max-w-[1380px] px-4 sm:px-6 md:px-10">
     
-    <div>
-      <p class="font-serif text-lg font-bold tracking-tight">{siteConfig.brand.name}</p>
-      <p class="text-xs text-white/60 mt-1">{siteConfig.brand.tagline} &bull; {siteConfig.location.city}, Gujarat</p>
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8 pb-12 border-b border-white/15">
+      
+      <!-- Column 1: Protected Logo Badge & Brand Tagline -->
+      <div class="md:col-span-5 flex flex-col items-start">
+        <!-- 🎨 REFINED: Elegant white rounded card container ensuring 100% logo clarity -->
+        <a href="#" class="h-16 sm:h-35 w-auto object-contain grayscale brightness-0 invert">
+          <img 
+            src="/assets/images/logo.png" 
+            alt={siteConfig.brand.name} 
+            class="h-12 sm:h-35 w-auto object-contain" 
+          />
+        </a>
+        <p class="mt-5 text-sm leading-relaxed text-white/90 max-w-sm font-normal">Step into a supportive online sanctuary created exclusively for women, built for lasting wellness and peace.</p>
+      </div>
+
+      <!-- Column 2: High-Contrast Useful Links -->
+      <div class="md:col-span-3">
+        <h4 class="font-serif text-lg font-bold text-white mb-6 tracking-wide">Useful Links</h4>
+        <ul class="space-y-3.5 text-sm font-medium">
+          {siteConfig.classes.map((course) => (
+            <li class="flex items-center gap-2.5">
+              <span class="text-xs text-[#D8CDE3]">▸</span>
+              <!-- 🎨 REFINED: High contrast text-white/95 with crisp underline transition -->
+              <a href="#offerings" class="text-white/95 hover:text-white hover:underline decoration-[#D8CDE3] underline-offset-4 transition-all">
+                {course.name}
+              </a>
+            </li>
+          ))}
+          <li class="flex items-center gap-2.5">
+            <span class="text-xs text-[#D8CDE3]">▸</span>
+            <a href="#authority" class="text-white/95 hover:text-white hover:underline decoration-[#D8CDE3] underline-offset-4 transition-all">
+              About Karuna
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Contact Info -->
+      <div class="md:col-span-4">
+        <h4 class="font-serif text-lg font-bold text-white mb-6 tracking-wide">Contact Info</h4>
+        <ul class="space-y-4 text-sm text-white/90 font-normal">
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 shrink-0 text-[#D8CDE3] fill-current" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+            <span>Yoga With Karuna</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 shrink-0 text-[#D8CDE3] fill-current" viewBox="0 0 24 24"><path d="M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.083-1.026-3.493-6.817-2.106 1.039c-7.202 3.755 4.233 25.982 11.6 22.615.121-.055 2.102-1.029 2.11-1.033z"/></svg>
+            <span>+91 98765 43210</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="h-5 w-5 shrink-0 text-[#D8CDE3] fill-current" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+            <span>contact@yogawithkaruna.com</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="h-5 w-5 shrink-0 text-[#D8CDE3] fill-current mt-0.5" viewBox="0 0 24 24"><path d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/></svg>
+            <span>Live Online Classes &bull; Global Community</span>
+          </li>
+        </ul>
+      </div>
+
     </div>
 
-    <div class="text-xs text-white/50 space-y-1">
+    <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/70 font-normal">
       <p>&copy; {currentYear} {siteConfig.brand.name}. All rights reserved.</p>
-      <p class="text-[10px]">Built for high-conversion offline enrollment.</p>
+      <p>Designed for premium online yoga education.</p>
     </div>
 
   </div>

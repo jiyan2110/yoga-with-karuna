@@ -1,24 +1,28 @@
-# build output
+# Build Outputs & Temporary Astro Files
 dist/
-# generated types
 .astro/
+*.tsbuildinfo
 
-# dependencies
+# Node Dependencies (Never push these!)
 node_modules/
-
-# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-
-# environment variables
+# Environment Variables & Secrets (CRITICAL TO BLOCK)
 .env
-.env.production
+.env.*
+!.env.example
+*.local
 
-# macOS-specific files
-.DS_Store
-
-# jetbrains setting folder
+# Editor & OS Files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
 .idea/
+.DS_Store
+Thumbs.db
+
+# System Logs & Diagnostic files
+*.log
