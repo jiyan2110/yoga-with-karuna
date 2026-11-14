@@ -11,7 +11,7 @@ interface Props {
 const { title = siteConfig.seo.title, description = siteConfig.seo.description, noindex = false } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.url).href;
-const ogImage = new URL('/link-preview.jpg', Astro.site ?? siteConfig.url).href;
+const ogImage = new URL('/share-image.jpg', Astro.site ?? siteConfig.url).href;
 
 // Only the Devanagari glyphs we actually use are downloaded.
 const devanagariText = encodeURIComponent(siteConfig.brand.sanskrit);
@@ -79,7 +79,7 @@ const structuredData = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Yoga With Karuna logo on purple beside a sunrise yoga scene" />
+    <meta property="og:image:alt" content="Yoga With Karuna logo over a sunrise yoga scene" />
     <meta property="og:locale" content="en_IN" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

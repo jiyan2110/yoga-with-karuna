@@ -24,7 +24,7 @@ Requires Node 22.12 or newer.
 | Logo and photos | `src/assets/` (optimised automatically at build time) |
 | Class card photos and look | `src/assets/classes/` · `classCardStyle` in `site-content.ts` (`'photo'` or `'light'`) |
 | About facts layout | `aboutHighlightStyle` in `site-content.ts` (`'columns'`, `'tiles'` or `'strip'`) |
-| Link-preview image for WhatsApp/Facebook | `public/link-preview.jpg` (1200×630) |
+| Link-preview image for WhatsApp/Facebook | `public/share-image.jpg` (1200×630) |
 | Production URL (canonical, sitemap) | `astro.config.mjs` → `site`, plus `public/robots.txt` and `public/sitemap.xml` |
 
 ### Adding Karuna's photos
