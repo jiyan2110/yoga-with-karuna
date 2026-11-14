@@ -43,9 +43,14 @@ export type AboutHighlightStyle = 'tiles' | 'strip' | 'columns';
 export interface Testimonial {
   id: string;
   studentName: string;
-  classJoined: string;
-  duration: string;
-  reviewText: string;
+  /** Short line under the name, e.g. "Video review". */
+  label: string;
+  /** Written review (shown in full behind "Read full review" when long). */
+  reviewText?: string;
+  /** Video review: file in /public, plus a still frame shown before it plays. */
+  video?: { src: string; poster: string };
+  /** Voice note: file in /public, with an optional written version underneath. */
+  audio?: { src: string; transcript?: string };
 }
 
 export interface HeroCopy {
@@ -210,23 +215,25 @@ export const siteConfig = {
     { title: 'Join live from home', detail: 'Roll out your mat and practise live with personal guidance on your posture.' },
   ],
 
-  // TODO(client): replace with real, consented reviews (screenshots with names blurred work well).
   testimonials: [
     {
-      id: 'rev-1',
-      studentName: 'Priya P.',
-      classJoined: 'Regular Yoga',
-      duration: '8 months',
+      id: 'priyanka-bhatt',
+      studentName: 'Priyanka Bhatt',
+      label: 'Written review',
       reviewText:
-        "Karuna's classes have eased the lower back stiffness I got from sitting at a desk all day. Videos never corrected my posture, but her personal attention makes all the difference.",
+        "I have no words to describe your work, Karuna ma'am: your guidance and your way of teaching. Thank you so much, and thank you Krishna ji for sending you as my yoga guru. You gave me the courage to believe that even with a heavy body I can do yoga, and every time you say such positive, inspiring words that make it feel easy. When I bought a yoga wheel I had no idea whether I could do power yoga at my weight, but you gave me the courage and confidence. In just two months I achieved so many goals: I lost inches from my whole body, my face is slimmer than before, and the best news is that my doctor reduced my thyroid dosage. All the credit goes to you, ma'am. In between I got stuck with family issues and work and took a break, and I regret leaving yoga, but you pushed me, inspired me and got me back on track. And no words for your meditation sessions: I feel so relaxed and calm, out of this world. Thank you for coming into my life and accepting me as your student. 🙏🌹",
     },
     {
-      id: 'rev-2',
-      studentName: 'Sneha D.',
-      classJoined: 'Face Yoga',
-      duration: '6 months',
-      reviewText:
-        'The energy in the live sessions is wonderful. I have found a natural glow and a calm in my evenings I did not expect.',
+      id: 'maithili-pathak',
+      studentName: 'Maithili Pathak',
+      label: 'Video review',
+      video: { src: '/testimonials/maithili-pathak.mp4', poster: '/testimonials/maithili-pathak-poster.jpg' },
+    },
+    {
+      id: 'nilofar',
+      studentName: 'Nilofar bint Kadeerahmad',
+      label: 'Voice note',
+      audio: { src: '/testimonials/nilofar.m4a' },
     },
   ] satisfies Testimonial[] as Testimonial[],
 

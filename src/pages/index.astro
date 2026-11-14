@@ -49,28 +49,47 @@ import FloatingWhatsApp from '../components/ui/FloatingWhatsApp.astro';
     });
   }
 
-  // Mobile swipe rows: add a dot per card and keep the current one highlighted.
+  // Mobile swipe rows: arrows, a dot per card and a hint; pauses video/audio on cards swiped away.
+  const arrow = (d: string) => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
   document.querySelectorAll<HTMLElement>('.swipe').forEach((row) => {
     const cards = Array.from(row.children) as HTMLElement[];
     if (cards.length < 2) return;
-    const dots = document.createElement('div');
-    dots.className = 'swipe-dots';
-    const buttons = cards.map((card, i) => {
+    const nav = document.createElement('div');
+    nav.className = 'swipe-nav';
+    nav.innerHTML = `
+      <div class="swipe-row">
+        <button type="button" class="swipe-arrow" data-dir="-1" aria-label="Previous">${arrow('M15 18l-6-6 6-6')}</button>
+        <div class="swipe-dots"></div>
+        <button type="button" class="swipe-arrow" data-dir="1" aria-label="Next">${arrow('M9 18l6-6-6-6')}</button>
+      </div>
+      <p class="swipe-hint">${arrow('M5 12h14M13 6l6 6-6 6')} Swipe to see more</p>`;
+    const dots = nav.querySelector('.swipe-dots')!;
+    const [prev, next] = Array.from(nav.querySelectorAll<HTMLButtonElement>('.swipe-arrow'));
+    let current = 0;
+    const go = (i: number) => {
+      const card = cards[Math.max(0, Math.min(cards.length - 1, i))];
+      row.scrollTo({ left: card.offsetLeft - row.offsetLeft - parseFloat(getComputedStyle(row).paddingLeft), behavior: 'smooth' });
+    };
+    const buttons = cards.map((_, i) => {
       const b = document.createElement('button');
       b.type = 'button';
       b.setAttribute('aria-label', `Show card ${i + 1} of ${cards.length}`);
-      b.addEventListener('click', () => row.scrollTo({ left: card.offsetLeft - row.offsetLeft - (row.clientWidth - card.clientWidth) / 2, behavior: 'smooth' }));
+      b.addEventListener('click', () => go(i));
       dots.append(b);
       return b;
     });
-    row.after(dots);
+    prev.addEventListener('click', () => go(current - 1));
+    next.addEventListener('click', () => go(current + 1));
+    row.after(nav);
     const update = () => {
-      const mid = row.scrollLeft + row.clientWidth / 2;
-      let best = 0;
-      cards.forEach((c, i) => {
-        if (Math.abs(c.offsetLeft - row.offsetLeft + c.clientWidth / 2 - mid) < Math.abs(cards[best].offsetLeft - row.offsetLeft + cards[best].clientWidth / 2 - mid)) best = i;
-      });
-      buttons.forEach((b, i) => b.setAttribute('aria-current', String(i === best)));
+      const i = Math.round(row.scrollLeft / (cards[1].offsetLeft - cards[0].offsetLeft));
+      if (i !== current) {
+        cards[current]?.querySelectorAll<HTMLMediaElement>('video, audio').forEach((m) => m.pause());
+        current = Math.max(0, Math.min(cards.length - 1, i));
+      }
+      buttons.forEach((b, k) => b.setAttribute('aria-current', String(k === current)));
+      prev.disabled = current === 0;
+      next.disabled = current === cards.length - 1;
     };
     row.addEventListener('scroll', update, { passive: true });
     update();

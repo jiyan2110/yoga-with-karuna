@@ -143,11 +143,11 @@
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
 }
 
-/* Mobile swipe rows (classes, testimonials): side-scrolling cards with dots under them. */
+/* Mobile swipe rows (classes, testimonials): one card at a time, with arrows, dots and a hint under them. */
 @media (max-width: 767px) {
   .swipe {
     display: flex !important;
-    gap: 1rem;
+    gap: 2.5rem;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
@@ -158,16 +158,32 @@
   }
   .swipe::-webkit-scrollbar { display: none; }
   .swipe > * {
-    flex: 0 0 86%;
-    scroll-snap-align: center;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
   .js .swipe > .reveal { opacity: 1; transform: none; }
 }
-.swipe-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.5rem; }
+.swipe-nav { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; margin-top: 0.75rem; }
+.swipe-row { display: flex; align-items: center; gap: 1rem; }
+.swipe-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 2.75rem; height: 2.75rem; border-radius: 999px;
+  background: #fff; color: var(--color-plum);
+  border: 1.5px solid rgb(131 38 118 / 0.35);
+  box-shadow: var(--shadow-soft);
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+.swipe-arrow:active { background: var(--color-plum-soft); }
+.swipe-arrow:disabled { opacity: 0.35; box-shadow: none; }
+.swipe-dots { display: flex; gap: 0.5rem; }
 .swipe-dots button {
   width: 0.5rem; height: 0.5rem; border-radius: 999px;
   background: rgb(30 27 93 / 0.2);
   transition: width 0.25s ease, background-color 0.25s ease;
 }
 .swipe-dots button[aria-current="true"] { width: 1.5rem; background: var(--color-plum); }
-@media (min-width: 768px) { .swipe-dots { display: none; } }
+.swipe-hint { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; color: var(--color-muted); }
+.swipe-hint svg { animation: swipe-nudge 1.6s ease-in-out infinite; }
+@keyframes swipe-nudge { 0%, 100% { transform: translateX(-3px); } 50% { transform: translateX(3px); } }
+@media (min-width: 768px) { .swipe-nav { display: none; } }

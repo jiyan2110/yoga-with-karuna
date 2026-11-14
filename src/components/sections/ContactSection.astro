@@ -6,14 +6,14 @@ const { contact, brand } = siteConfig;
 ---
 
 <section id="contact" class="px-4 pb-20 sm:px-8 sm:pb-28">
-  <div class="reveal relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-plum via-plum-deep to-indigo px-6 py-14 text-center text-white sm:px-12 sm:py-20">
-    <div class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-white/10" aria-hidden="true"></div>
+  <div class="reveal relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#b067a6] via-[#a65a9b] to-[#8e4384] px-6 py-14 text-center text-white sm:px-12 sm:py-20">
+    <div class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-white/15" aria-hidden="true"></div>
     <div class="absolute -right-20 -bottom-28 h-80 w-80 rounded-full bg-sun/25 blur-2xl" aria-hidden="true"></div>
 
-    <p class="relative font-deva text-2xl text-lilac" lang="sa">{brand.sanskrit}</p>
-    <h2 class="relative mx-auto mt-3 max-w-2xl text-4xl font-semibold !text-white sm:text-5xl">Ready to awaken the warrior within?</h2>
-    <p class="relative mx-auto mt-5 max-w-xl text-lg text-white/80">
-      Message Karuna to choose your class, ask about fees and get your Google Meet / Zoom link.
+    <p class="relative font-deva text-2xl text-white/90" lang="sa">{brand.sanskrit}</p>
+    <h2 class="relative mx-auto mt-3 max-w-2xl text-4xl font-semibold !text-white sm:text-5xl">Ready to rise like a warrior, <em class="font-medium text-[#fde7c8]">glow like a yogi</em>?</h2>
+    <p class="relative mx-auto mt-5 max-w-xl text-lg text-white/95">
+      Your first step is one message. Choose your class, ask about fees and get your Google Meet / Zoom link.
     </p>
 
     <div class="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -21,12 +21,12 @@ const { contact, brand } = siteConfig;
         <Icon name="whatsapp" class="h-5 w-5 text-[#1a9e4f]" />
         Chat on WhatsApp
       </a>
-      <a href={`tel:${contact.phoneE164}`} class="btn w-full border border-white/30 text-white hover:bg-white/10 sm:w-auto">
+      <a href={`tel:${contact.phoneE164}`} class="btn w-full border border-white/50 text-white hover:bg-white/15 sm:w-auto">
         <Icon name="phone" class="h-5 w-5" />
         {contact.phoneDisplay}
       </a>
     </div>
-    <p class="relative mt-6 text-sm text-white/75">
+    <p class="relative mt-6 text-sm text-white/90">
       or email <a href={`mailto:${contact.email}`} class="font-semibold text-white underline decoration-white/40 underline-offset-4 hover:decoration-white">{contact.email}</a>
     </p>
   </div>
