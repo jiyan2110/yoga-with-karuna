@@ -1,0 +1,135 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import ContactSection from '../components/sections/ContactSection.astro';
+import FloatingWhatsApp from '../components/ui/FloatingWhatsApp.astro';
+import Icon from '../components/ui/Icon.astro';
+import { galleryGroups, galleryCount } from '../config/gallery';
+
+// Large versions for the full-screen viewer (PhotoSwipe needs each image's real size).
+const groups = await Promise.all(
+  galleryGroups.map(async (g) => ({
+    ...g,
+    photos: await Promise.all(
+      g.photos.map(async (p) => {
+        const width = Math.min(1600, p.src.width);
+        const height = Math.round((p.src.height * width) / p.src.width);
+        const full = await getImage({ src: p.src, width, format: 'webp' });
+        return { ...p, full: full.src, width, height };
+      }),
+    ),
+  })),
+);
+---
+
+<Layout
+  title="Gallery | Yoga With Karuna"
+  description="Photos from Karuna's International Yoga Day events, corporate and community sessions, workshops and live online yoga classes for women."
+>
+  <Header />
+  <main id="main-content">
+    <section class="relative overflow-hidden pt-10 pb-6 sm:pt-16">
+      <div class="pointer-events-none absolute -top-32 -left-24 -z-10 h-96 w-96 rounded-full bg-lilac/50 blur-3xl" aria-hidden="true"></div>
+      <div class="container-page">
+        <a href="/#gallery" class="inline-flex items-center gap-1.5 text-sm font-semibold text-plum hover:underline">
+          <Icon name="arrow" class="h-4 w-4 rotate-180" /> Back to home
+        </a>
+        <p class="eyebrow mt-8 flex w-fit">Gallery · {galleryCount} photos</p>
+        <h1 class="mt-4 text-4xl font-semibold sm:text-6xl">Moments from the <span class="text-plum italic">mat</span></h1>
+        <p class="mt-4 max-w-2xl text-lg text-muted">Yoga Day events, corporate and community sessions, workshops and live online classes. Tap any photo to see it larger.</p>
+        <nav aria-label="Gallery sections" class="mt-7 flex flex-wrap gap-2">
+          {groups.map((g) => (
+            <a href={`#${g.id}`} class="rounded-full border border-plum/20 bg-white/80 px-4 py-2 text-sm font-semibold text-indigo transition hover:border-plum hover:text-plum">
+              {g.title} <span class="text-muted">· {g.photos.length}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </section>
+
+    <div id="gallery-page" class="container-page pb-20 sm:pb-24">
+      {groups.map((g) => (
+        <section id={g.id} class="scroll-mt-24 pt-12">
+          <h2 class="flex items-center gap-4 text-2xl font-semibold sm:text-3xl">
+            {g.title}
+            <span class="h-px flex-1 bg-indigo/10" aria-hidden="true"></span>
+          </h2>
+          <div class="mt-6 columns-2 gap-3 sm:gap-4 lg:columns-3">
+            {g.photos.map((p) => (
+              <a
+                href={p.full}
+                data-pswp-width={p.width}
+                data-pswp-height={p.height}
+                data-caption={g.title}
+                target="_blank"
+                class="group mb-3 block break-inside-avoid overflow-hidden rounded-2xl bg-plum-soft shadow-soft ring-1 ring-indigo/8 sm:mb-4"
+              >
+                <Picture
+                  src={p.src}
+                  alt={p.alt}
+                  formats={['avif', 'webp']}
+                  widths={[360, 640, 900]}
+                  sizes="(min-width: 1024px) 24rem, 50vw"
+                  loading="lazy"
+                  class="h-auto w-full transition duration-500 group-hover:scale-[1.03]"
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <ContactSection />
+  </main>
+  <Footer />
+  <FloatingWhatsApp />
+</Layout>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#gallery-page',
+    children: 'a[data-pswp-width]',
+    pswpModule: () => import('photoswipe'),
+    bgOpacity: 0.92,
+    loop: false,
+  });
+
+  // Show the section title under each photo in the viewer.
+  lightbox.on('uiRegister', () => {
+    lightbox.pswp?.ui?.registerElement({
+      name: 'group-caption',
+      order: 9,
+      isButton: false,
+      appendTo: 'root',
+      onInit: (el, pswp) => {
+        pswp.on('change', () => {
+          const link = pswp.currSlide?.data.element as HTMLElement | undefined;
+          el.textContent = link?.dataset.caption ?? '';
+        });
+      },
+    });
+  });
+  lightbox.init();
+</script>
+
+<style is:global>
+  .pswp__group-caption {
+    position: absolute;
+    left: 50%;
+    bottom: 1.25rem;
+    transform: translateX(-50%);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    background: rgb(30 27 93 / 0.7);
+    color: #fff;
+    font: 600 0.9rem/1.2 var(--font-sans);
+    white-space: nowrap;
+  }
+  .pswp { --pswp-bg: #1a1640; }
+</style>

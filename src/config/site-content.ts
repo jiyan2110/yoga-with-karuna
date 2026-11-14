@@ -136,11 +136,12 @@ export const siteConfig = {
   },
 
   nav: [
-    { label: 'About', href: '#about' },
-    { label: 'Classes', href: '#classes' },
-    { label: 'Stories', href: '#stories' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'About', href: '/#about' },
+    { label: 'Classes', href: '/#classes' },
+    { label: 'Stories', href: '/#stories' },
+    { label: 'Gallery', href: '/gallery' },
+    { label: 'FAQ', href: '/#faq' },
+    { label: 'Contact', href: '/#contact' },
   ] satisfies NavLink[],
 
   classCardStyle: 'photo' as ClassCardStyle,

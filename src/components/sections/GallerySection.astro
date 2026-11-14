@@ -1,0 +1,72 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import { galleryPreview, galleryCount } from '../../config/gallery';
+
+const more = galleryCount - galleryPreview.length;
+// Tile layout: first photo large, the other four small.
+const tile = [
+  'col-span-2 aspect-[4/3] lg:row-span-2 lg:aspect-auto',
+  'aspect-square lg:aspect-auto',
+  'aspect-square lg:aspect-auto',
+  'aspect-square lg:aspect-auto',
+  'aspect-square lg:aspect-auto',
+];
+---
+
+<section id="gallery" class="py-20 sm:py-28">
+  <div class="container-page">
+    <div class="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Gallery</p>
+        <h2 class="mt-4 text-4xl font-semibold sm:text-5xl">Moments from the <span class="text-plum italic">mat</span></h2>
+        <p class="mt-4 text-lg text-muted">Yoga Day events, workshops and live classes with Karuna.</p>
+      </div>
+      <a href="/gallery" class="btn btn-primary hidden w-fit md:inline-flex">
+        See full gallery
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+    </div>
+
+    <div class="reveal mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:h-[34rem] lg:grid-cols-4 lg:grid-rows-2">
+      {galleryPreview.map((photo, i) => (
+        <a
+          href="/gallery"
+          class={`group relative block overflow-hidden rounded-2xl bg-plum-soft shadow-soft ${tile[i]}`}
+          aria-label={i === galleryPreview.length - 1 ? `See all ${galleryCount} photos` : `Open the gallery: ${photo.alt}`}
+        >
+          <Picture
+            src={photo.src}
+            alt={photo.alt}
+            formats={['avif', 'webp']}
+            widths={i === 0 ? [480, 800, 1200] : [320, 520]}
+            sizes={i === 0 ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'}
+            loading="lazy"
+            class="h-full w-full"
+            pictureAttributes={{ class: 'block h-full w-full' }}
+            style="object-fit: cover; width: 100%; height: 100%;"
+          />
+          <span class="absolute inset-0 bg-indigo/0 transition duration-300 group-hover:bg-indigo/15" aria-hidden="true"></span>
+          {i === galleryPreview.length - 1 && more > 0 && (
+            <span class="absolute inset-0 flex flex-col items-center justify-center bg-plum-deep/65 text-white backdrop-blur-[2px] transition group-hover:bg-plum-deep/75">
+              <span class="font-serif text-3xl font-semibold sm:text-4xl">+{more}</span>
+              <span class="mt-1 text-sm font-semibold">more photos</span>
+            </span>
+          )}
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-8 text-center md:hidden">
+      <a href="/gallery" class="btn btn-primary">
+        See full gallery
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  #gallery a :global(img) { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  #gallery a:hover :global(img) { transform: scale(1.04); }
+</style>

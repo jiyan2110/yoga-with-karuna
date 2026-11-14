@@ -10,7 +10,7 @@ interface Props {
 
 const { title = siteConfig.seo.title, description = siteConfig.seo.description, noindex = false } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.url).href;
+const canonical = new URL(Astro.url.pathname.replace(/(.)\/$/, '$1'), Astro.site ?? siteConfig.url).href;
 const ogImage = new URL('/share-image.jpg', Astro.site ?? siteConfig.url).href;
 
 // Only the Devanagari glyphs we actually use are downloaded.

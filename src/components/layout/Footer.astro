@@ -12,7 +12,7 @@ const linkClass = 'text-white/80 transition-colors hover:text-white';
 <footer class="bg-plum-deep pt-16 pb-28 text-white sm:pb-12">
   <div class="container-page grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
     <div>
-      <a href="#top" class="inline-block" aria-label={`${brand.name}, back to top`}>
+      <a href="/#top" class="inline-block" aria-label={`${brand.name}, back to top`}>
         <Image src={logo} alt="" width={230} densities={[1, 2]} class="h-auto w-[230px]" />
       </a>
       <p class="mt-5 max-w-xs leading-relaxed text-white/75">{brand.tagline}. Live online yoga for women, from wherever you are.</p>
@@ -32,7 +32,7 @@ const linkClass = 'text-white/80 transition-colors hover:text-white';
     <nav aria-label="Quick links">
       <h2 class="font-sans text-sm font-bold tracking-[0.14em] !text-lilac uppercase">Quick links</h2>
       <ul class="mt-5 space-y-1">
-        <li><a href="#top" class={`inline-block py-1.5 ${linkClass}`}>Home</a></li>
+        <li><a href="/#top" class={`inline-block py-1.5 ${linkClass}`}>Home</a></li>
         {siteConfig.nav.map((l) => <li><a href={l.href} class={`inline-block py-1.5 ${linkClass}`}>{l.label}</a></li>)}
       </ul>
     </nav>
@@ -40,7 +40,7 @@ const linkClass = 'text-white/80 transition-colors hover:text-white';
     <nav aria-label="Our classes">
       <h2 class="font-sans text-sm font-bold tracking-[0.14em] !text-lilac uppercase">Our classes</h2>
       <ul class="mt-5 space-y-1">
-        {siteConfig.classes.map((c) => <li><a href={`#${c.id}`} class={`inline-block py-1.5 ${linkClass}`}>{c.shortName}</a></li>)}
+        {siteConfig.classes.map((c) => <li><a href={`/#${c.id}`} class={`inline-block py-1.5 ${linkClass}`}>{c.shortName}</a></li>)}
       </ul>
     </nav>
 
