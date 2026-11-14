@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/ui/Icon.astro';
+import { siteConfig, whatsappLink } from '../config/site-content';
+---
+
+<Layout title={`Page not found | ${siteConfig.brand.name}`} noindex>
+  <main id="main-content" class="flex min-h-svh items-center justify-center px-6 py-20 text-center">
+    <div class="max-w-md">
+      <p class="font-deva text-3xl text-plum" lang="sa">{siteConfig.brand.sanskrit}</p>
+      <h1 class="mt-4 text-4xl font-semibold">This page has drifted away</h1>
+      <p class="mt-4 text-lg text-muted">Take a deep breath. Let’s get you back to your mat.</p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/" class="btn btn-primary">Back to home</a>
+        <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+          <Icon name="whatsapp" class="h-5 w-5 text-[#1a9e4f]" /> Message Karuna
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>

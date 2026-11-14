@@ -1,0 +1,28 @@
+---
+import Icon from '../ui/Icon.astro';
+import { siteConfig } from '../../config/site-content';
+---
+
+<section id="faq" class="py-20 sm:py-28">
+  <div class="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+    <div class="reveal">
+      <p class="eyebrow">Questions</p>
+      <h2 class="mt-4 text-4xl font-semibold sm:text-5xl">Before you roll out your mat</h2>
+      <p class="mt-5 text-lg text-muted">Anything else on your mind? Message Karuna on WhatsApp and she will be happy to help.</p>
+    </div>
+
+    <div class="reveal divide-y divide-indigo/10 rounded-[var(--radius-card)] bg-white px-6 shadow-soft ring-1 ring-indigo/8 sm:px-8">
+      {siteConfig.faqs.map((faq) => (
+        <details class="group py-2">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left text-lg font-semibold text-indigo marker:hidden [&::-webkit-details-marker]:hidden">
+            {faq.question}
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-plum-soft text-plum transition-transform duration-300 group-open:rotate-45">
+              <Icon name="plus" class="h-4 w-4" />
+            </span>
+          </summary>
+          <p class="pb-5 pr-10 leading-relaxed text-muted">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

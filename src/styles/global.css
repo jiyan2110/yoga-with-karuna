@@ -1,43 +1,144 @@
 @import "tailwindcss";
 
+/* Brand tokens — taken from the logo (plum + indigo) and the sunrise photo (warm sand). */
+@theme {
+  --color-plum: #832676;
+  --color-plum-deep: #5c1a53;
+  --color-plum-soft: #f6eef5;
+  --color-indigo: #1e1b5d;
+  --color-indigo-soft: #eceaf6;
+  --color-lilac: #d8cde3;
+  --color-rose: #b8326b;
+  --color-rose-soft: #fbedf2;
+  --color-sand: #fbf6f0;
+  --color-sun: #f2a65a;
+  --color-ink: #2a2650;
+  --color-muted: #5b5878;
+
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-deva: "Tiro Devanagari Sanskrit", "Noto Serif Devanagari", "Kohinoor Devanagari", serif;
+
+  --radius-card: 1.5rem;
+  --shadow-soft: 0 10px 40px -12px rgb(30 27 93 / 0.18);
+  --shadow-lift: 0 22px 50px -18px rgb(30 27 93 / 0.28);
+}
+
 @layer base {
-  :root {
-    --font-serif: 'Playfair Display', Georgia, serif;
-    --font-sans: 'Inter', system-ui, sans-serif;
-  }
-  
-  h1, h2, h3, .font-serif {
-    font-family: var(--font-serif);
-    color: #1E1B5D;
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     font-family: var(--font-sans);
-    background-color: #FCFDFE;
-    color: #1E1B5D;
-    overflow-x: hidden;
+    background: var(--color-sand);
+    color: var(--color-ink);
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Default brand links */
-  a:not([class*="btn-"]):not([class*="nav-"]) {
-    color: #832676;
-    transition: color 0.2s ease;
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    color: var(--color-indigo);
+    text-wrap: balance;
+    letter-spacing: -0.01em;
   }
-  
-  a:not([class*="btn-"]):not([class*="nav-"]):hover {
-    color: #1E1B5D;
+
+  p { text-wrap: pretty; }
+
+  ::selection { background: var(--color-plum); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-plum);
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
-/* GPU-Accelerated Scroll Entrance Classes */
-.reveal-on-scroll {
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: var(--color-indigo);
+    color: #fff;
+    font-weight: 600;
+    transition: top 0.2s;
+  }
+  .skip-link:focus { top: 1rem; }
+
+  .container-page {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 75rem;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) { .container-page { padding-inline: 2rem; } }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-plum);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.5rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--color-plum);
+    color: #fff;
+    box-shadow: 0 10px 24px -10px rgb(131 38 118 / 0.6);
+  }
+  .btn-primary:hover { background: var(--color-plum-deep); transform: translateY(-1px); }
+  .btn-ghost {
+    background: rgb(255 255 255 / 0.7);
+    color: var(--color-indigo);
+    border: 1.5px solid rgb(30 27 93 / 0.18);
+    backdrop-filter: blur(6px);
+  }
+  .btn-ghost:hover { border-color: var(--color-indigo); background: #fff; }
+  .btn-light { background: #fff; color: var(--color-plum-deep); }
+  .btn-light:hover { background: var(--color-lilac); }
+}
+
+/* Scroll reveal: content is only hidden when JS is running, and never for reduced-motion users. */
+.js .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.js .reveal.is-visible { opacity: 1; transform: none; }
 
-.reveal-on-scroll.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
 }

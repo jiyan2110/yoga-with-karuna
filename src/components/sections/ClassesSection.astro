@@ -1,0 +1,91 @@
+---
+import ClassCard from '../ui/ClassCard.astro';
+import Icon from '../ui/Icon.astro';
+import { siteConfig } from '../../config/site-content';
+
+const { classes, schedule } = siteConfig;
+const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+// Group classes into time slots for the weekly timetable.
+const slots = [...new Set(classes.map((c) => c.time))].map((time) => ({
+  time,
+  byDay: days.map((_, d) => classes.find((c) => c.time === time && c.dayIndexes.includes(d))),
+}));
+
+const chip = {
+  plum: 'bg-plum-soft text-plum',
+  rose: 'bg-rose-soft text-rose',
+  indigo: 'bg-indigo-soft text-indigo',
+} as const;
+---
+
+<section id="classes" class="relative py-20 sm:py-28">
+  <div class="container-page">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow justify-center">Class schedule</p>
+      <h2 class="mt-4 text-4xl font-semibold sm:text-5xl">Healthy face, healthy mind, <span class="text-plum italic">healthy you</span></h2>
+      <p class="mt-5 text-lg text-muted">
+        Three live online classes, six evenings a week. Practise from home with personal guidance on every posture.
+      </p>
+      <p class="mt-5 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-medium text-indigo">
+        <span class="inline-flex items-center gap-1.5"><Icon name="globe" class="h-4 w-4 text-plum" /> All timings in {schedule.timezone}</span>
+        <span class="inline-flex items-center gap-1.5"><Icon name="video" class="h-4 w-4 text-plum" /> Live on {schedule.platform}</span>
+      </p>
+    </div>
+
+    <!-- Weekly timetable: table on tablet/desktop -->
+    <div class="reveal mt-12 hidden overflow-hidden rounded-[var(--radius-card)] bg-white shadow-soft ring-1 ring-indigo/8 md:block">
+      <table class="w-full table-fixed text-left">
+        <caption class="sr-only">Weekly class timetable (IST)</caption>
+        <thead>
+          <tr class="bg-indigo text-white">
+            <th scope="col" class="w-36 px-5 py-4 text-sm font-semibold">Time (IST)</th>
+            {days.map((d, i) => <th scope="col" class="px-2 py-4 text-center text-sm font-semibold"><abbr title={dayNames[i]} class="no-underline">{d}</abbr></th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {slots.map((slot) => (
+            <tr class="border-t border-indigo/8">
+              <th scope="row" class="px-5 py-4 text-sm font-semibold whitespace-nowrap text-indigo">{slot.time}</th>
+              {slot.byDay.map((c) => (
+                <td class="px-1.5 py-3 text-center">
+                  {c ? (
+                    <a href={`#${c.id}`} class={`block rounded-xl px-2 py-2.5 text-[0.8rem] leading-tight font-semibold transition hover:brightness-95 ${chip[c.theme]}`}>
+                      {c.shortName}
+                    </a>
+                  ) : (
+                    <span class="text-indigo/25" aria-label="No class">—</span>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Weekly timetable: day list on mobile -->
+    <ul class="reveal mt-10 grid grid-cols-2 gap-3 md:hidden" aria-label="Weekly class timetable (IST)">
+      {dayNames.map((name, d) => (
+        <li class="rounded-2xl bg-white p-3.5 shadow-soft ring-1 ring-indigo/8">
+          <p class="text-sm font-bold text-indigo">{name}</p>
+          <ul class="mt-2 space-y-1.5">
+            {classes.filter((c) => c.dayIndexes.includes(d)).map((c) => (
+              <li>
+                <a href={`#${c.id}`} class={`block rounded-lg px-2.5 py-1.5 text-xs font-semibold ${chip[c.theme]}`}>
+                  {c.shortName}
+                  <span class="block font-medium opacity-80">{c.time.split(' – ')[0]} PM</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {classes.map((offering) => <ClassCard offering={offering} />)}
+    </div>
+  </div>
+</section>

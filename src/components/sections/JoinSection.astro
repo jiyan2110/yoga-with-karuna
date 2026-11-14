@@ -1,0 +1,31 @@
+---
+import Icon from '../ui/Icon.astro';
+import { siteConfig, whatsappLink } from '../../config/site-content';
+---
+
+<section class="bg-indigo py-20 text-white sm:py-24">
+  <div class="container-page">
+    <div class="reveal max-w-2xl">
+      <p class="eyebrow !text-lilac">How to join</p>
+      <h2 class="mt-4 text-4xl font-semibold !text-white sm:text-5xl">Start in three simple steps</h2>
+    </div>
+
+    <ol class="mt-12 grid gap-6 md:grid-cols-3">
+      {siteConfig.steps.map((step, i) => (
+        <li class="reveal relative rounded-[var(--radius-card)] bg-white/[0.06] p-7 ring-1 ring-white/10">
+          <span class="font-serif text-5xl font-semibold text-sun">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="mt-4 text-xl font-semibold !text-white">{step.title}</h3>
+          <p class="mt-2 leading-relaxed text-white/75">{step.detail}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="reveal mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+      <a href={whatsappLink('Hi Karuna, could you share the fees and batch availability for your online yoga classes?')} target="_blank" rel="noopener noreferrer" class="btn btn-light">
+        <Icon name="whatsapp" class="h-5 w-5 text-[#1a9e4f]" />
+        Ask about fees & batches
+      </a>
+      <p class="text-sm text-white/70">Women only · Beginners welcome · All timings in IST</p>
+    </div>
+  </div>
+</section>

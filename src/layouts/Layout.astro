@@ -5,50 +5,103 @@ import { siteConfig } from '../config/site-content';
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { 
-  title = siteConfig.seo.title, 
-  description = siteConfig.seo.description 
-} = Astro.props;
+const { title = siteConfig.seo.title, description = siteConfig.seo.description, noindex = false } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.url).href;
+const ogImage = new URL('/og-image.jpg', Astro.site ?? siteConfig.url).href;
+
+// Only the Devanagari glyphs we actually use are downloaded.
+const devanagariText = encodeURIComponent(siteConfig.brand.sanskrit);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteConfig.url}/#org`,
+      name: siteConfig.brand.name,
+      url: siteConfig.url,
+      logo: ogImage,
+      email: siteConfig.contact.email,
+      telephone: siteConfig.contact.phoneE164,
+      sameAs: [siteConfig.social.instagram, siteConfig.social.facebook],
+      founder: { '@id': `${siteConfig.url}/#karuna` },
+    },
+    {
+      '@type': 'Person',
+      '@id': `${siteConfig.url}/#karuna`,
+      name: siteConfig.instructor.name,
+      jobTitle: siteConfig.instructor.title,
+      worksFor: { '@id': `${siteConfig.url}/#org` },
+    },
+    ...siteConfig.classes.map((c) => ({
+      '@type': 'Course',
+      name: c.name,
+      description: c.description,
+      provider: { '@id': `${siteConfig.url}/#org` },
+      hasCourseInstance: {
+        '@type': 'CourseInstance',
+        courseMode: 'online',
+        courseSchedule: { '@type': 'Schedule', repeatFrequency: 'P1W', description: `${c.days}, ${c.time} IST` },
+      },
+    })),
+  ],
+};
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.replace('no-js', 'js');</script>
 
-    <!-- Primary SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={Astro.url.href} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#832676" />
 
-    <!-- OpenGraph / WhatsApp Link Preview Engine -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/favicon-64.png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap.xml" />
+
+    <!-- Link previews (WhatsApp, Facebook, X, LinkedIn) -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:site_name" content={siteConfig.brand.name} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/assets/images/karuna-og-preview.jpg" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Yoga With Karuna logo over a sunrise yoga scene" />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
-    <!-- Typography Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href={`https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&display=swap&text=${devanagariText}`}
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
 
-  <body class="bg-[#FAF9F6] text-[#1A1A1A] font-sans antialiased selection:bg-[#4A6B5D] selection:text-white">
-    <!-- WCAG 2.1 AA Keyboard Accessibility Shortcut -->
-    <a 
-      href="#main-content" 
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-3 focus:bg-[#4A6B5D] focus:text-white focus:font-medium focus:rounded-md focus:shadow-xl"
-    >
-      Skip to main content
-    </a>
-
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <slot />
-
   </body>
 </html>

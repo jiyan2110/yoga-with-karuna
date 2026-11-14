@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/logo.png';
+import Icon from '../ui/Icon.astro';
+import { siteConfig } from '../../config/site-content';
+
+const { instructor, gallery, brand } = siteConfig;
+const highlightIcons = ['award', 'sparkle', 'users', 'heart'] as const;
+---
+
+<section id="about" class="relative overflow-x-clip bg-white py-20 sm:py-28">
+  <div class="container-page grid items-center gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+    <div class="reveal relative mx-auto w-full max-w-sm lg:max-w-none">
+      <div class="absolute -inset-2 -z-0 rotate-[-3deg] rounded-[2.25rem] bg-plum-soft sm:-inset-3" aria-hidden="true"></div>
+      {instructor.photo ? (
+        <Image
+          src={instructor.photo}
+          alt={`${instructor.name}, yoga teacher`}
+          widths={[400, 640, 800]}
+          sizes="(min-width: 1024px) 34vw, 24rem"
+          class="relative aspect-[4/5] w-full rounded-[2rem] object-cover shadow-lift"
+        />
+      ) : (
+        <div class="relative flex aspect-[4/5] w-full flex-col items-center justify-center overflow-hidden rounded-[2rem] bg-gradient-to-br from-plum via-plum-deep to-indigo p-8 text-center text-white shadow-lift">
+          <div class="absolute -top-16 -right-16 h-56 w-56 rounded-full bg-white/10" aria-hidden="true"></div>
+          <div class="absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-sun/20 blur-2xl" aria-hidden="true"></div>
+          <div class="relative rounded-3xl bg-white p-5 shadow-xl">
+            <Image src={logo} alt="" width={200} densities={[1, 2]} class="h-auto w-[180px]" />
+          </div>
+          <p class="relative mt-8 font-serif text-3xl font-semibold text-white">{instructor.name}</p>
+          <p class="relative mt-1 text-sm text-white/80">{instructor.title}</p>
+          <p class="relative mt-6 font-serif text-lg italic text-lilac">{brand.mantra.join(' · ')}</p>
+        </div>
+      )}
+    </div>
+
+    <div class="reveal">
+      <p class="eyebrow">About your teacher</p>
+      <h2 class="mt-4 text-4xl font-semibold sm:text-5xl">
+        Namaste! I’m <span class="text-plum italic">{instructor.name}</span>
+      </h2>
+      <div class="mt-6 space-y-4 text-lg leading-relaxed text-muted">
+        {instructor.bioParagraphs.map((p) => <p>{p}</p>)}
+      </div>
+
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2">
+        {instructor.highlights.map((h, i) => (
+          <li class="flex items-start gap-3.5 rounded-2xl border border-indigo/10 bg-sand p-4">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-plum text-white">
+              <Icon name={highlightIcons[i % highlightIcons.length]} class="h-5 w-5" />
+            </span>
+            <span>
+              <span class="block font-semibold text-indigo">{h.title}</span>
+              <span class="block text-sm text-muted">{h.detail}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  {gallery.length > 0 && (
+    <div class="container-page mt-16">
+      <ul class="flex snap-x gap-4 overflow-x-auto pb-2 sm:grid sm:grid-cols-4 lg:grid-cols-6">
+        {gallery.map((g) => (
+          <li class="w-40 shrink-0 snap-start sm:w-auto">
+            <Image src={g.src} alt={g.alt} widths={[240, 400]} sizes="(min-width: 1024px) 12rem, 10rem" class="aspect-square w-full rounded-2xl object-cover" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</section>

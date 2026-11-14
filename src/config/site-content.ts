@@ -1,173 +1,231 @@
+/**
+ * All site copy and contact details live here.
+ * To add Karuna's photos later: put the files in src/assets/ and import them
+ * below (see `instructor.photo` and `gallery`). Sections that need a photo
+ * fall back to a designed card until one is added — no placeholder text is shown.
+ */
+import type { ImageMetadata } from 'astro';
+
 export interface NavLink {
   label: string;
   href: string;
 }
 
-export interface Credential {
-  title: string;
-  issuer: string;
-}
+export type ClassTheme = 'plum' | 'rose' | 'indigo';
 
 export interface ClassOffering {
   id: string;
   name: string;
+  shortName: string;
+  tagline: string;
   level: string;
-  timing: string;
+  time: string;
   days: string;
+  /** Day indexes the class runs on, Monday = 0 … Saturday = 5 */
+  dayIndexes: number[];
   description: string;
   benefits: string[];
-  formLink: string;
+  theme: ClassTheme;
 }
 
 export interface Testimonial {
   id: string;
   studentName: string;
-  locality: string; 
-  batchJoined: string;
+  classJoined: string;
+  duration: string;
   reviewText: string;
-  monthsPracticing: string;
 }
 
-export interface SiteConfig {
-  instructor: {
-    name: string;
-    title: string;
-    experienceYears: string;
-    bioParagraphs: string[];
-    credentials: Credential[];
-  };
+export interface Faq {
+  question: string;
+  answer: string;
+}
+
+export const siteConfig = {
+  url: 'https://yoga-with-karuna.vercel.app',
+
   brand: {
-    name: string;
-    tagline: string;
-    subTagline: string;
-  };
-  social: {
-    instagram: string;
-    facebook: string;
-  };
-  whatsapp: {
-    phoneDigits: string;
-    defaultDraft: string;
-  };
-  seo: {
-    title: string;
-    description: string;
-  };
-  nav: NavLink[];
-  classes: ClassOffering[];
-  testimonials: Testimonial[];
-}
+    name: 'Yoga With Karuna',
+    sanskrit: 'अहमस्मि योधः',
+    sanskritMeaning: 'I am a warrior',
+    tagline: "Where a warrior's spirit meets a yogi's wisdom",
+    mantra: ['Breathe', 'Believe', 'Become'],
+    audience: 'Live online yoga · For women only',
+  },
 
-export const siteConfig: SiteConfig = {
+  hero: {
+    greeting: 'Namaste, beautiful souls',
+    intro:
+      'Welcome to Yoga With Karuna, a journey of self-discovery, strength and transformation. A women-only online yoga space where ancient wisdom meets modern wellness.',
+    support:
+      'Through yoga, breathwork and mindful movement, we help women build a strong body, a calmer mind and a deeper connection with themselves.',
+  },
+
   instructor: {
-    name: "Karuna",
-    title: "US Alliance (Yoga Alliance) Certified Yoga Teacher",
-    experienceYears: "4+",
+    name: 'Karuna',
+    title: 'Yoga Alliance (USA) certified yoga teacher',
+    experienceYears: '4+',
+    studentsGuided: '300+',
+    /** Set to an imported image (e.g. `import karuna from '../assets/karuna.jpg'`) once available. */
+    photo: undefined as ImageMetadata | undefined,
     bioParagraphs: [
-      "In a world that expects women to be everything for everyone, it's easy to forget yourself. Yoga With Karuna is a sanctuary created exclusively for women—a space where you can pause, breathe, heal, and reconnect with your true self.",
-      "Rooted in the timeless wisdom of India's ancient Rishi tradition and inspired by the harmony and mindfulness of Eastern cultures, our classes are designed to nurture not only the body but also the mind and soul.",
-      "My mission is to help women become stronger, healthier, happier, and more connected to themselves."
+      'With over 4 years of teaching experience and more than 300 people guided through yoga, I am passionate about making traditional wellness practice accessible to every woman.',
+      "As a Yoga Alliance certified teacher and a Kalaripayattu practitioner, I bring together the grace of yoga and the discipline of India's ancient martial art.",
+      'My mission is simple: to help women become stronger, healthier, happier and more connected to themselves.',
     ],
-    credentials: [
-      { title: "US Alliance Certified", issuer: "Yoga Alliance" },
-      { title: "Online Yoga Classes", issuer: "Global Women's Community" },
-      { title: "Gym & Fitness Training", issuer: "Physical Conditioning" },
-      { title: "Corporate Sessions", issuer: "Workplace Harmony" }
-    ]
+    highlights: [
+      { title: 'Yoga Alliance (USA)', detail: 'Certified yoga teacher' },
+      { title: 'Kalaripayattu', detail: "Practitioner of India's ancient martial art" },
+      { title: '300+ students', detail: 'Guided over 4+ years of teaching' },
+      { title: 'Fitness & corporate', detail: 'Strength training and workplace sessions' },
+    ],
   },
-  brand: {
-    name: "Yoga With Karuna",
-    tagline: "अहमस्मि योद्धा",
-    subTagline: "Awaken the Warrior Within. Embrace the Peace Within.",
+
+  /** Add imported images here to show a photo strip in the About section. */
+  gallery: [] as { src: ImageMetadata; alt: string }[],
+
+  contact: {
+    phoneDisplay: '+91 96628 72510',
+    phoneE164: '+919662872510',
+    email: 'karuna.yoga22@gmail.com',
+    whatsappDigits: '919662872510',
+    defaultDraft: 'Hi Karuna, I am interested in joining your online yoga classes. Could you share the details?',
   },
+
   social: {
-    instagram: "https://www.instagram.com/yoga_with_karuna",
-    facebook: "https://www.facebook.com/share/17TBweDcYX/"
+    instagram: 'https://www.instagram.com/yoga_with_karuna',
+    facebook: 'https://www.facebook.com/share/17TBweDcYX/',
   },
-  whatsapp: {
-    phoneDigits: "919662872510",
-    defaultDraft: "Hi Karuna, I am interested in joining your online yoga sanctuary.",
-  },
+
   seo: {
-    title: "Yoga With Karuna | Women-Only Online Sanctuary",
-    description: "A sanctuary exclusively for women. Join Certified Yoga Teacher Karuna for live online Hatha, Ashtanga, and Meditation classes.",
+    title: 'Yoga With Karuna | Live Online Yoga Classes for Women',
+    description:
+      'Women-only live online yoga with Yoga Alliance certified teacher Karuna. Regular yoga, face yoga and meditation classes on Google Meet, Monday to Saturday (IST).',
   },
+
   nav: [
-    { label: "About Karuna", href: "#authority" },
-    { label: "Online Classes", href: "#offerings" },
-    { label: "Student Stories", href: "#reviews" },
-  ],
+    { label: 'About', href: '#about' },
+    { label: 'Classes', href: '#classes' },
+    { label: 'Stories', href: '#stories' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Contact', href: '#contact' },
+  ] satisfies NavLink[],
+
+  schedule: {
+    timezone: 'IST (UTC+5:30)',
+    platform: 'Google Meet',
+  },
+
   classes: [
     {
-      id: "regular-batch",
-      name: "Regular Yoga Batch",
-      level: "Beginners to Intermediate",
-      timing: "6:30 PM – 7:30 PM",
-      days: "Monday to Friday",
-      description: "Build strength, flexibility, balance, and body awareness in a supportive daily practice.",
+      id: 'regular-yoga',
+      name: 'Regular Yoga Class',
+      shortName: 'Regular Yoga',
+      tagline: 'Strength, flexibility and balance',
+      level: 'Beginner to intermediate',
+      time: '6:30 – 7:30 PM',
+      days: 'Monday to Friday',
+      dayIndexes: [0, 1, 2, 3, 4],
+      description: 'A supportive daily practice to build strength, flexibility, balance and body awareness.',
       benefits: [
-        "Improved Flexibility & Strength",
-        "Better Posture & Balance",
-        "Stress Relief & Relaxation",
-        "Weight Management Support"
+        'Improved flexibility & strength',
+        'Better posture & balance',
+        'Stress relief & relaxation',
+        'Weight management support',
       ],
-      formLink: "https://docs.google.com/forms/..." 
+      theme: 'plum',
     },
     {
-      id: "meditation-yoga",
-      name: "Meditation Yoga",
-      level: "All Levels",
-      timing: "Check Schedule",
-      days: "Tuesday, Thursday & Saturday",
-      description: "Experience deep relaxation, mindfulness, and emotional balance with focused meditation.",
+      id: 'face-yoga',
+      name: 'Face Yoga Class',
+      shortName: 'Face Yoga',
+      tagline: 'Healthy face, healthy mind',
+      level: 'Women of all ages',
+      time: '9:00 – 10:00 PM',
+      days: 'Monday, Wednesday & Friday',
+      dayIndexes: [0, 2, 4],
+      description: 'Targeted facial exercises and massage for a natural glow and better circulation.',
       benefits: [
-        "Mental Calmness & Clarity",
-        "Better Sleep Quality",
-        "Reduced Anxiety & Stress",
-        "Emotional Healing & Balance"
+        'Natural glow & radiance',
+        'Toned facial muscles',
+        'Improved blood circulation',
+        'Youthful appearance',
       ],
-      formLink: "https://docs.google.com/forms/..."
+      theme: 'rose',
     },
     {
-      id: "face-yoga",
-      name: "Face Yoga",
-      level: "Women of All Ages",
-      timing: "Check Schedule",
-      days: "Monday, Wednesday & Friday",
-      description: "Natural glow and radiance through targeted facial muscle toning and improved circulation.",
+      id: 'meditation-yoga',
+      name: 'Meditation Yoga Class',
+      shortName: 'Meditation',
+      tagline: 'Calm mind, restful sleep',
+      level: 'All levels',
+      time: '9:00 – 10:00 PM',
+      days: 'Tuesday, Thursday & Saturday',
+      dayIndexes: [1, 3, 5],
+      description: 'Breathwork and guided meditation for deep relaxation, mindfulness and emotional balance.',
       benefits: [
-        "Natural Glow & Radiance",
-        "Toned Facial Muscles",
-        "Improved Blood Circulation",
-        "Youthful Appearance"
+        'Mental calmness & clarity',
+        'Better sleep quality',
+        'Reduced anxiety & stress',
+        'Emotional healing & balance',
       ],
-      formLink: "https://docs.google.com/forms/..."
-    }
+      theme: 'indigo',
+    },
+  ] satisfies ClassOffering[] as ClassOffering[],
+
+  steps: [
+    { title: 'Message on WhatsApp', detail: 'Tell Karuna which class interests you. She will share fees and batch availability.' },
+    { title: 'Get your Meet link', detail: 'Receive the Google Meet link and a few tips to set up your space.' },
+    { title: 'Join live from home', detail: 'Roll out your mat and practise live with personal guidance on your posture.' },
   ],
+
+  // TODO(client): replace with real, consented reviews (screenshots with names blurred work well).
   testimonials: [
     {
-      id: "rev-1",
-      studentName: "Priya Patel",
-      locality: "Online Student",
-      batchJoined: "Regular Yoga Batch",
-      monthsPracticing: "8 Months",
-      reviewText: "Practicing under Karuna has completely cured my lower back stiffness from sitting at a desk all day. Online videos never corrected my posture, but Karuna's personal attention makes all the difference."
+      id: 'rev-1',
+      studentName: 'Priya P.',
+      classJoined: 'Regular Yoga',
+      duration: '8 months',
+      reviewText:
+        "Karuna's classes have eased the lower back stiffness I got from sitting at a desk all day. Videos never corrected my posture, but her personal attention makes all the difference.",
     },
     {
-      id: "rev-2",
-      studentName: "Dr. Amit Shah",
-      locality: "Online Student",
-      batchJoined: "Meditation Yoga",
-      monthsPracticing: "1 Year",
-      reviewText: "I truly appreciate how scientifically Karuna approaches mental alignment. Learning from her gives you confidence that you are in the safest hands possible."
+      id: 'rev-2',
+      studentName: 'Sneha D.',
+      classJoined: 'Face Yoga',
+      duration: '6 months',
+      reviewText:
+        'The energy in the live sessions is wonderful. I have found a natural glow and a calm in my evenings I did not expect.',
+    },
+  ] satisfies Testimonial[] as Testimonial[],
+
+  faqs: [
+    {
+      question: 'I have never done yoga. Can I join?',
+      answer:
+        'Yes. The Regular Yoga class is designed for beginners to intermediate students, and Face Yoga and Meditation are open to all levels. Karuna adjusts each posture to your body.',
     },
     {
-      id: "rev-3",
-      studentName: "Sneha Desai",
-      locality: "Online Student",
-      batchJoined: "Face Yoga",
-      monthsPracticing: "6 Months",
-      reviewText: "The energy in the live sessions is incredible, and I have found a natural glow and flexibility I never dreamed I could have."
-    }
-  ]
+      question: 'What do I need for an online class?',
+      answer:
+        'A yoga mat, comfortable clothes, a quiet corner and a phone or laptop with Google Meet. Place your camera so Karuna can see your full body for posture corrections.',
+    },
+    {
+      question: 'Are the classes really women only?',
+      answer: 'Yes. Every batch is exclusively for women, so you can practise in a safe, comfortable and supportive space.',
+    },
+    {
+      question: 'Which time zone are the timings in?',
+      answer:
+        'All timings are in Indian Standard Time (IST, UTC+5:30). If you live abroad, message Karuna and she will help you find a batch that suits your time zone.',
+    },
+    {
+      question: 'What are the fees?',
+      answer: 'Fees depend on the class and plan you choose. Message Karuna on WhatsApp for the current fees and batch availability.',
+    },
+  ] satisfies Faq[] as Faq[],
 };
+
+export function whatsappLink(message: string = siteConfig.contact.defaultDraft): string {
+  return `https://wa.me/${siteConfig.contact.whatsappDigits}?text=${encodeURIComponent(message)}`;
+}

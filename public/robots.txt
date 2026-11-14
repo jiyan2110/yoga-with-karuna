@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yoga-with-karuna.vercel.app/sitemap.xml

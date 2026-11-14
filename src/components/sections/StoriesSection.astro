@@ -1,0 +1,44 @@
+---
+import Icon from '../ui/Icon.astro';
+import { siteConfig } from '../../config/site-content';
+---
+
+<section id="stories" class="bg-white py-20 sm:py-28">
+  <div class="container-page">
+    <div class="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Student stories</p>
+        <h2 class="mt-4 text-4xl font-semibold sm:text-5xl">What our students say</h2>
+      </div>
+      <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" class="btn btn-ghost w-fit">
+        <Icon name="instagram" class="h-4 w-4 text-plum" />
+        More on Instagram
+      </a>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      {siteConfig.testimonials.map((t) => (
+        <figure class="reveal relative flex flex-col rounded-[var(--radius-card)] bg-sand p-8 ring-1 ring-indigo/8 sm:p-10">
+          <span class="absolute top-4 right-7 font-serif text-8xl leading-none text-plum/15" aria-hidden="true">“</span>
+          <div class="flex gap-0.5 text-sun" aria-label="Rated 5 out of 5">
+            {Array.from({ length: 5 }).map(() => (
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" /></svg>
+            ))}
+          </div>
+          <blockquote class="mt-5 flex-1 font-serif text-xl leading-relaxed text-indigo">
+            <p>{t.reviewText}</p>
+          </blockquote>
+          <figcaption class="mt-8 flex items-center gap-3.5 border-t border-indigo/10 pt-5">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-plum font-serif text-lg font-semibold text-white" aria-hidden="true">
+              {t.studentName.charAt(0)}
+            </span>
+            <span>
+              <span class="block font-semibold text-indigo">{t.studentName}</span>
+              <span class="block text-sm text-muted">{t.classJoined} · practising {t.duration}</span>
+            </span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

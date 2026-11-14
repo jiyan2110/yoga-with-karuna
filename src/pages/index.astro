@@ -1,49 +1,51 @@
 ---
-import '../styles/global.css';
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
-import HeroSection from '../components/sections/HeroSection.astro';
-import BioSection from '../components/sections/BioSection.astro';
-import OfferingsSection from '../components/sections/OfferingsSection.astro';
-import TestimonialsSection from '../components/sections/TestimonialsSection.astro';
 import Footer from '../components/layout/Footer.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import AboutSection from '../components/sections/AboutSection.astro';
+import ClassesSection from '../components/sections/ClassesSection.astro';
+import JoinSection from '../components/sections/JoinSection.astro';
+import StoriesSection from '../components/sections/StoriesSection.astro';
+import FaqSection from '../components/sections/FaqSection.astro';
+import ContactSection from '../components/sections/ContactSection.astro';
 import FloatingWhatsApp from '../components/ui/FloatingWhatsApp.astro';
 ---
 
 <Layout>
   <Header />
-
   <main id="main-content">
     <HeroSection />
-    <BioSection />
-    <OfferingsSection />
-    <TestimonialsSection />
+    <AboutSection />
+    <ClassesSection />
+    <JoinSection />
+    <StoriesSection />
+    <FaqSection />
+    <ContactSection />
   </main>
-
   <Footer />
   <FloatingWhatsApp />
 </Layout>
 
 <script>
-  const observerCallback: IntersectionObserverCallback = (entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
-        observer.unobserve(entry.target);
-      }
+  // Reveal sections as they scroll into view (styles in global.css; skipped for reduced motion).
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach((el) => el.classList.add('is-visible'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      }),
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.01 },
+    );
+    els.forEach((el) => io.observe(el));
+    // Jumping via the menu: reveal the target section straight away so it is never blank.
+    addEventListener('hashchange', () => {
+      document.querySelector(location.hash)?.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
     });
-  };
-
-  const observerOptions: IntersectionObserverInit = {
-    root: null,
-    rootMargin: '0px 0px -60px 0px',
-    threshold: 0.15
-  };
-
-  const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
-    revealElements.forEach((el) => scrollObserver.observe(el));
-  });
+  }
 </script>
