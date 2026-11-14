@@ -32,7 +32,6 @@ const linkClass = 'text-white/80 transition-colors hover:text-white';
     <nav aria-label="Quick links">
       <h2 class="font-sans text-sm font-bold tracking-[0.14em] !text-lilac uppercase">Quick links</h2>
       <ul class="mt-5 space-y-1">
-        <li><a href="/#top" class={`inline-block py-1.5 ${linkClass}`}>Home</a></li>
         {siteConfig.nav.map((l) => <li><a href={l.href} class={`inline-block py-1.5 ${linkClass}`}>{l.label}</a></li>)}
       </ul>
     </nav>

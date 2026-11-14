@@ -136,6 +136,7 @@ export const siteConfig = {
   },
 
   nav: [
+    { label: 'Home', href: '/#top' },
     { label: 'About', href: '/#about' },
     { label: 'Classes', href: '/#classes' },
     { label: 'Stories', href: '/#stories' },
