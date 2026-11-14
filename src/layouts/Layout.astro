@@ -14,7 +14,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.url).href
 const ogImage = new URL('/share-image.jpg', Astro.site ?? siteConfig.url).href;
 
 // Only the Devanagari glyphs we actually use are downloaded.
-const devanagariText = encodeURIComponent(siteConfig.brand.sanskrit);
+const devanagariText = encodeURIComponent(
+  [...new Set([siteConfig.brand.sanskrit, ...siteConfig.testimonials.filter((t) => t.lang === 'hi').map((t) => t.reviewText ?? '')].join(''))].join(''),
+);
 
 const structuredData = {
   '@context': 'https://schema.org',

@@ -30,7 +30,7 @@ const stars = 'M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381
           {t.reviewText && (
             <div class="story-text mt-5" data-story>
               <span class="pointer-events-none absolute top-4 right-7 font-serif text-8xl leading-none text-plum/15" aria-hidden="true">“</span>
-              <blockquote class="story-clamp font-serif text-lg leading-relaxed text-indigo">
+              <blockquote lang={t.lang} class={`story-clamp text-lg leading-relaxed text-indigo ${t.lang === 'hi' ? 'font-deva' : 'font-serif'}`}>
                 <p>{t.reviewText}</p>
               </blockquote>
               <button type="button" data-story-toggle aria-expanded="false" class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-plum hover:underline">

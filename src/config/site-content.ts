@@ -47,6 +47,8 @@ export interface Testimonial {
   label: string;
   /** Written review (shown in full behind "Read full review" when long). */
   reviewText?: string;
+  /** Language of the written review, e.g. 'hi' for Hindi (sets the right font). */
+  lang?: string;
   /** Video review: file in /public, plus a still frame shown before it plays. */
   video?: { src: string; poster: string };
   /** Voice note: file in /public, with an optional written version underneath. */
@@ -232,8 +234,10 @@ export const siteConfig = {
     {
       id: 'nilofar',
       studentName: 'Nilofar bint Kadeerahmad',
-      label: 'Voice note',
-      audio: { src: '/testimonials/nilofar.m4a' },
+      label: 'Written review',
+      lang: 'hi',
+      reviewText:
+        'नमस्ते मैम! मैं आपको बहुत याद करती हूँ। आपके बताए अनुसार मैं पिछले तीन हफ़्तों से रोज़ थोड़ी-थोड़ी एक्सरसाइज़ कर रही हूँ और खान-पान भी वैसा ही रख रही हूँ जैसा आपने समझाया था। पूरी लगन से करने का नतीजा यह है कि मेरे वज़न में बहुत अच्छा बदलाव आया है। जब मैंने आपको जॉइन किया था तब मेरा वज़न 78.5 किलो था, और अब 74.1 किलो है। बहुत-बहुत धन्यवाद, मैम! 🙏',
     },
   ] satisfies Testimonial[] as Testimonial[],
 
