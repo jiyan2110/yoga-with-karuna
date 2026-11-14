@@ -1,0 +1,14 @@
+---
+/**
+ * Kalaripayattu mark (shield over two crossed swords) from the client's artwork.
+ * White on a transparent background, so the holes show whatever colour the box behind it is.
+ */
+import { Image } from 'astro:assets';
+import kalari from '../../assets/kalari-icon.png';
+
+interface Props {
+  class?: string;
+}
+const { class: className = 'h-8 w-8' } = Astro.props;
+---
+<Image src={kalari} alt="" width={64} densities={[1, 2, 3]} class={className} />

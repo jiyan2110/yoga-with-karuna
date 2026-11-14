@@ -2,13 +2,19 @@
 import { Picture } from 'astro:assets';
 import sunrise from '../../assets/hero-sunrise.webp';
 import Icon from '../ui/Icon.astro';
-import { siteConfig, whatsappLink } from '../../config/site-content';
+import { siteConfig, whatsappLink, type HeroCopy } from '../../config/site-content';
 
+interface Props {
+  /** Overrides the headline and intro (handy for previewing other wording). */
+  copy?: HeroCopy;
+}
 const { brand, hero, instructor } = siteConfig;
+const headline = Astro.props.copy?.headline ?? hero.headline;
+const intro = Astro.props.copy?.intro ?? hero.intro;
 const firstClass = siteConfig.classes[0];
 ---
 
-<section id="top" class="relative isolate overflow-hidden">
+<section id={Astro.props.copy ? undefined : 'top'} class="relative isolate overflow-hidden">
   <!-- soft brand glow -->
   <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
     <div class="absolute -top-40 -left-32 h-[34rem] w-[34rem] rounded-full bg-lilac/50 blur-3xl"></div>
@@ -31,11 +37,11 @@ const firstClass = siteConfig.classes[0];
       </p>
 
       <h1 class="mt-3 text-[2.6rem] leading-[1.08] font-semibold sm:text-6xl lg:text-[4.1rem]">
-        Where a warrior’s spirit meets a <em class="font-medium text-plum">yogi’s wisdom</em>
+        {headline.lead} <em class="font-medium text-plum">{headline.emphasis}</em>
       </h1>
 
       <p class="mt-5 max-w-xl text-base leading-relaxed text-muted sm:mt-6 sm:text-lg">
-        <strong class="font-semibold text-indigo">{hero.greeting}!</strong> {hero.intro}
+        <strong class="font-semibold text-indigo">{hero.greeting}!</strong> {intro}
       </p>
       <p class="mt-3 hidden max-w-xl leading-relaxed text-muted sm:block">{hero.support}</p>
 
@@ -103,7 +109,7 @@ const firstClass = siteConfig.classes[0];
 
       <div class="absolute top-8 -right-2 hidden items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-indigo shadow-soft sm:flex">
         <Icon name="video" class="h-4 w-4 text-plum" />
-        Live on Google Meet
+        Live on Google Meet / Zoom
       </div>
     </div>
   </div>

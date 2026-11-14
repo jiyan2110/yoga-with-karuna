@@ -1,26 +1,37 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
-import { whatsappLink, type ClassOffering } from '../../config/site-content';
+import { siteConfig, whatsappLink, type ClassOffering, type ClassCardStyle } from '../../config/site-content';
 
 interface Props {
   offering: ClassOffering;
+  /** Overrides siteConfig.classCardStyle (handy for previewing the other style). */
+  cardStyle?: ClassCardStyle;
 }
-const { offering } = Astro.props;
+const { offering, cardStyle = siteConfig.classCardStyle } = Astro.props;
+const usePhoto = cardStyle === 'photo' && !!offering.photo;
 
 // Full class strings so Tailwind can see them.
 const themes = {
-  plum: { band: 'from-plum to-plum-deep', soft: 'bg-plum-soft', text: 'text-plum', btn: 'bg-plum hover:bg-plum-deep', ring: 'hover:ring-plum/30' },
-  rose: { band: 'from-rose to-plum', soft: 'bg-rose-soft', text: 'text-rose', btn: 'bg-rose hover:bg-plum', ring: 'hover:ring-rose/30' },
-  indigo: { band: 'from-indigo to-plum-deep', soft: 'bg-indigo-soft', text: 'text-indigo', btn: 'bg-indigo hover:bg-plum-deep', ring: 'hover:ring-indigo/30' },
+  plum: { band: 'from-[#a65a9b] to-[#8e4384]', shade: 'from-plum-deep/90 via-plum/55 to-transparent', soft: 'bg-plum-soft', text: 'text-plum', btn: 'bg-plum hover:bg-plum-deep', ring: 'hover:ring-plum/30' },
+  rose: { band: 'from-[#bf4f80] to-[#9a4a8c]', shade: 'from-[#7a1f47]/90 via-rose/55 to-transparent', soft: 'bg-rose-soft', text: 'text-rose', btn: 'bg-rose hover:bg-plum', ring: 'hover:ring-rose/30' },
+  indigo: { band: 'from-[#5f5aa6] to-[#7f4b8f]', shade: 'from-indigo/90 via-indigo/55 to-transparent', soft: 'bg-indigo-soft', text: 'text-indigo', btn: 'bg-indigo hover:bg-plum-deep', ring: 'hover:ring-indigo/30' },
 } as const;
 const t = themes[offering.theme];
 const draft = `Hi Karuna, I would like to join the ${offering.name} (${offering.days}, ${offering.time} IST). Could you share the fees and how to join?`;
 ---
 
 <article id={offering.id} class={`reveal group flex flex-col overflow-hidden rounded-[var(--radius-card)] bg-white shadow-soft ring-1 ring-indigo/8 transition duration-300 hover:-translate-y-1 hover:shadow-lift ${t.ring}`}>
-  <header class={`relative bg-gradient-to-br ${t.band} px-6 pt-6 pb-7 text-white`}>
-    <div class="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/10" aria-hidden="true"></div>
-    <p class="text-xs font-semibold tracking-[0.14em] text-white/80 uppercase">{offering.tagline}</p>
+  <header class={`relative isolate overflow-hidden px-6 pb-7 text-white ${usePhoto ? 'flex min-h-[19rem] flex-col justify-end pt-6' : `bg-gradient-to-br ${t.band} pt-6`}`}>
+    {usePhoto ? (
+      <>
+        <Image src={offering.photo!.src} alt={offering.photo!.alt} widths={[480, 800]} sizes="(min-width: 1024px) 24rem, (min-width: 768px) 45vw, 86vw" loading="lazy" decoding="async" style={offering.photo!.position ? `object-position:${offering.photo!.position}` : undefined} class="absolute inset-0 -z-20 h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+        <div class={`absolute inset-0 -z-10 bg-gradient-to-t ${t.shade}`} aria-hidden="true"></div>
+      </>
+    ) : (
+      <div class="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/15" aria-hidden="true"></div>
+    )}
+    <p class="text-xs font-semibold tracking-[0.14em] text-white/95 uppercase">{offering.tagline}</p>
     <h3 class="mt-2 font-serif text-2xl font-semibold text-white">{offering.name}</h3>
     <div class="mt-5 flex flex-wrap gap-2 text-sm">
       <span class="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 font-semibold backdrop-blur">

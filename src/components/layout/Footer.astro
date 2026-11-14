@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo-footer.png';
 import Icon from '../ui/Icon.astro';
 import { siteConfig, whatsappLink } from '../../config/site-content';
 
@@ -12,8 +12,8 @@ const linkClass = 'text-white/80 transition-colors hover:text-white';
 <footer class="bg-plum-deep pt-16 pb-28 text-white sm:pb-12">
   <div class="container-page grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
     <div>
-      <a href="#top" class="inline-block rounded-2xl bg-white p-3" aria-label={`${brand.name}, back to top`}>
-        <Image src={logo} alt="" width={150} densities={[1, 2]} class="h-auto w-[150px]" />
+      <a href="#top" class="inline-block" aria-label={`${brand.name}, back to top`}>
+        <Image src={logo} alt="" width={230} densities={[1, 2]} class="h-auto w-[230px]" />
       </a>
       <p class="mt-5 max-w-xs leading-relaxed text-white/75">{brand.tagline}. Live online yoga for women, from wherever you are.</p>
       <div class="mt-6 flex gap-2">

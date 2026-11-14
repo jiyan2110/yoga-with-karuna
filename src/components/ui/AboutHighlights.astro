@@ -1,0 +1,161 @@
+---
+/**
+ * Facts beside Karuna's bio, in one of three symmetric layouts:
+ * - tiles:   2 × 2 equal tiles, icon on top, certificates as small chips
+ * - strip:   2 × 2 equal cards, then the three certificates in a row below
+ * - columns: "Certified by Yoga Alliance" and "Experience", three rows each
+ */
+import Icon from './Icon.astro';
+import KalariIcon from './KalariIcon.astro';
+import { siteConfig, type AboutHighlightStyle } from '../../config/site-content';
+
+interface Props {
+  layout?: AboutHighlightStyle;
+}
+const { layout = siteConfig.aboutHighlightStyle } = Astro.props;
+const { highlights, credentials } = siteConfig.instructor;
+const [alliance, ...experience] = highlights;
+const box = 'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-plum text-white';
+---
+
+{layout === 'tiles' && (
+  <ul class="mt-10 grid gap-4 sm:grid-cols-2">
+    {highlights.map((h) => (
+      <li class="flex flex-col items-center rounded-2xl border border-indigo/10 bg-sand px-5 py-6 text-center">
+        <span class={box}>
+          {h.badge ? <span class="font-serif text-[0.95rem] font-bold">{h.badge}</span>
+            : h.icon === 'kalari' ? <KalariIcon class="h-10 w-10" />
+            : <Icon name={h.icon} class="h-6 w-6" />}
+        </span>
+        <span class="mt-3 block font-semibold text-indigo">{h.title}</span>
+        {h === alliance ? (
+          <span class="mt-2 flex flex-wrap justify-center gap-1.5">
+            {credentials.map((c) => <span class="rounded-full bg-plum-soft px-2.5 py-1 text-xs font-bold text-plum">{/\d/.test(c.code) ? c.code : `${c.code} ${c.hours}`}</span>)}
+          </span>
+        ) : (
+          <span class="mt-1 block text-sm text-muted">{h.detail}</span>
+        )}
+      </li>
+    ))}
+  </ul>
+)}
+
+{layout === 'strip' && (
+  <div class="mt-10" data-certs>
+    <ul class="grid gap-4 sm:grid-cols-2">
+      {highlights.map((h) => (
+        h === alliance ? (
+          <li>
+            <button
+              type="button"
+              data-certs-open
+              aria-haspopup="dialog"
+              class="group flex h-full w-full cursor-pointer items-center gap-3.5 rounded-2xl border-2 border-plum/30 bg-plum-soft p-4 text-left transition hover:-translate-y-0.5 hover:border-plum hover:shadow-soft focus-visible:border-plum"
+            >
+              <span class={box}><Icon name={h.icon} class="h-6 w-6" /></span>
+              <span class="flex-1">
+                <span class="block font-semibold text-indigo">{h.title}</span>
+                <span class="mt-0.5 inline-flex items-center gap-1 text-sm font-semibold text-plum">
+                  View {credentials.length} certificates
+                  <Icon name="arrow" class="h-4 w-4 transition group-hover:translate-x-1" />
+                </span>
+              </span>
+            </button>
+          </li>
+        ) : (
+          <li class="flex items-center gap-3.5 rounded-2xl border border-indigo/10 bg-sand p-4">
+            <span class={box}>
+              {h.badge ? <span class="font-serif text-[0.95rem] font-bold">{h.badge}</span>
+                : h.icon === 'kalari' ? <KalariIcon class="h-10 w-10" />
+                : <Icon name={h.icon} class="h-6 w-6" />}
+            </span>
+            <span>
+              <span class="block font-semibold text-indigo">{h.title}</span>
+              <span class="block text-sm text-muted">{h.detail}</span>
+            </span>
+          </li>
+        )
+      ))}
+    </ul>
+
+    <dialog data-certs-dialog aria-labelledby="certs-title" class="certs-dialog m-auto w-[min(92vw,40rem)] rounded-[var(--radius-card)] bg-white p-0 text-ink shadow-lift backdrop:bg-indigo/50 backdrop:backdrop-blur-sm">
+      <div class="p-6 sm:p-8">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="eyebrow">Certificates</p>
+            <h3 id="certs-title" class="mt-2 text-2xl font-semibold sm:text-3xl">Certified by {alliance.title}</h3>
+          </div>
+          <button type="button" data-certs-close aria-label="Close" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-indigo transition hover:bg-plum-soft">
+            <Icon name="close" class="h-5 w-5" />
+          </button>
+        </div>
+        <ul class="mt-6 grid gap-3 sm:grid-cols-3">
+          {credentials.map((c) => (
+            <li class="rounded-2xl bg-sand px-4 py-5 text-center ring-1 ring-indigo/8">
+              <span class="block font-serif text-2xl font-bold text-plum">{c.code}</span>
+              <span class="mt-1.5 block text-sm leading-snug text-muted">{c.name}</span>
+              <span class="mt-3 inline-block rounded-full bg-plum px-3 py-1 text-xs font-bold text-white">{c.hours} hours</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </dialog>
+  </div>
+)}
+
+{layout === 'columns' && (
+  <div class="mt-10 grid gap-6 rounded-[var(--radius-card)] border border-indigo/10 bg-sand p-6 sm:grid-cols-2 sm:gap-8">
+    <div>
+      <p class="text-xs font-bold tracking-[0.14em] text-plum uppercase">Certified · {alliance.title}</p>
+      <ul class="mt-4 space-y-4">
+        {credentials.map((c) => (
+          <li class="flex items-center gap-3.5">
+            <span class={`${box} flex-col leading-none`}>
+              <span class="font-serif text-[0.95rem] font-bold">{c.hours}</span>
+              <span class="mt-0.5 text-[0.6rem] font-semibold tracking-wide uppercase opacity-85">hrs</span>
+            </span>
+            <span>
+              <span class="block font-semibold text-indigo">{c.code}</span>
+              <span class="block text-sm text-muted">{c.name}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="border-indigo/10 sm:border-l sm:pl-8">
+      <p class="text-xs font-bold tracking-[0.14em] text-plum uppercase">Experience</p>
+      <ul class="mt-4 space-y-4">
+        {experience.map((h) => (
+          <li class="flex items-center gap-3.5">
+            <span class={box}>
+              {h.badge ? <span class="font-serif text-[0.95rem] font-bold">{h.badge}</span>
+                : h.icon === 'kalari' ? <KalariIcon class="h-10 w-10" />
+                : <Icon name={h.icon} class="h-6 w-6" />}
+            </span>
+            <span>
+              <span class="block font-semibold text-indigo">{h.title}</span>
+              <span class="block text-sm text-muted">{h.short ?? h.detail}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
+
+<script>
+  // Layout B: open the certificates pop-up from the Yoga Alliance card.
+  document.querySelectorAll<HTMLElement>('[data-certs]').forEach((root) => {
+    const dialog = root.querySelector<HTMLDialogElement>('[data-certs-dialog]');
+    if (!dialog) return;
+    root.querySelector('[data-certs-open]')?.addEventListener('click', () => dialog.showModal());
+    dialog.querySelector('[data-certs-close]')?.addEventListener('click', () => dialog.close());
+    // Close when the dimmed area outside the box is clicked.
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  });
+</script>
+
+<style>
+  .certs-dialog[open] { animation: certs-in 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes certs-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } }
+</style>

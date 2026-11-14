@@ -26,7 +26,7 @@ const chip = {
       <p class="eyebrow justify-center">Class schedule</p>
       <h2 class="mt-4 text-4xl font-semibold sm:text-5xl">Healthy face, healthy mind, <span class="text-plum italic">healthy you</span></h2>
       <p class="mt-5 text-lg text-muted">
-        Three live online classes, six evenings a week. Practise from home with personal guidance on every posture.
+        Live online classes only. Practise from home with personal guidance on every posture.
       </p>
       <p class="mt-5 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm font-medium text-indigo">
         <span class="inline-flex items-center gap-1.5"><Icon name="globe" class="h-4 w-4 text-plum" /> All timings in {schedule.timezone}</span>
@@ -84,7 +84,7 @@ const chip = {
       ))}
     </ul>
 
-    <div class="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div class="swipe mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3" aria-label="Classes, swipe to see more">
       {classes.map((offering) => <ClassCard offering={offering} />)}
     </div>
   </div>

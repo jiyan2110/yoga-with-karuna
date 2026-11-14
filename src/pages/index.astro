@@ -48,4 +48,31 @@ import FloatingWhatsApp from '../components/ui/FloatingWhatsApp.astro';
       document.querySelector(location.hash)?.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
     });
   }
+
+  // Mobile swipe rows: add a dot per card and keep the current one highlighted.
+  document.querySelectorAll<HTMLElement>('.swipe').forEach((row) => {
+    const cards = Array.from(row.children) as HTMLElement[];
+    if (cards.length < 2) return;
+    const dots = document.createElement('div');
+    dots.className = 'swipe-dots';
+    const buttons = cards.map((card, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', `Show card ${i + 1} of ${cards.length}`);
+      b.addEventListener('click', () => row.scrollTo({ left: card.offsetLeft - row.offsetLeft - (row.clientWidth - card.clientWidth) / 2, behavior: 'smooth' }));
+      dots.append(b);
+      return b;
+    });
+    row.after(dots);
+    const update = () => {
+      const mid = row.scrollLeft + row.clientWidth / 2;
+      let best = 0;
+      cards.forEach((c, i) => {
+        if (Math.abs(c.offsetLeft - row.offsetLeft + c.clientWidth / 2 - mid) < Math.abs(cards[best].offsetLeft - row.offsetLeft + cards[best].clientWidth / 2 - mid)) best = i;
+      });
+      buttons.forEach((b, i) => b.setAttribute('aria-current', String(i === best)));
+    };
+    row.addEventListener('scroll', update, { passive: true });
+    update();
+  });
 </script>

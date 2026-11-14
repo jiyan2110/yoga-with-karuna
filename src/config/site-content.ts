@@ -5,6 +5,10 @@
  * fall back to a designed card until one is added — no placeholder text is shown.
  */
 import type { ImageMetadata } from 'astro';
+// Class photos: free Pexels licence (commercial use allowed, no credit needed). pexels.com/license
+import regularYogaPhoto from '../assets/classes/regular-yoga.jpg'; // pexels.com/photo/29720736
+import faceYogaPhoto from '../assets/classes/face-yoga.jpg'; // pexels.com/photo/8076106
+import meditationPhoto from '../assets/classes/meditation.jpg'; // pexels.com/photo/4498220
 
 export interface NavLink {
   label: string;
@@ -26,7 +30,15 @@ export interface ClassOffering {
   description: string;
   benefits: string[];
   theme: ClassTheme;
+  /** Background photo for the 'photo' card style. */
+  photo?: { src: ImageMetadata; alt: string; position?: string };
 }
+
+/** How the coloured top of each class card looks: 'light' (softer colour) or 'photo' (picture behind the text). */
+export type ClassCardStyle = 'light' | 'photo';
+
+/** Layout of the facts beside Karuna's bio (see AboutHighlights.astro). */
+export type AboutHighlightStyle = 'tiles' | 'strip' | 'columns';
 
 export interface Testimonial {
   id: string;
@@ -34,6 +46,11 @@ export interface Testimonial {
   classJoined: string;
   duration: string;
   reviewText: string;
+}
+
+export interface HeroCopy {
+  headline: { lead: string; emphasis: string };
+  intro: string;
 }
 
 export interface Faq {
@@ -54,9 +71,11 @@ export const siteConfig = {
   },
 
   hero: {
-    greeting: 'Namaste, beautiful souls',
+    /** Big headline: `lead` in ink, `emphasis` in plum italics. */
+    headline: { lead: 'Rise like a warrior,', emphasis: 'glow like a yogi' },
+    greeting: 'Namaskaram, beautiful souls',
     intro:
-      'Welcome to Yoga With Karuna, a journey of self-discovery, strength and transformation. A women-only online yoga space where ancient wisdom meets modern wellness.',
+      'From regular yoga to face yoga and meditation, every class helps you grow stronger inside and out. Women only, live with Karuna.',
     support:
       'Through yoga, breathwork and mindful movement, we help women build a strong body, a calmer mind and a deeper connection with themselves.',
   },
@@ -73,11 +92,17 @@ export const siteConfig = {
       "As a Yoga Alliance certified teacher and a Kalaripayattu practitioner, I bring together the grace of yoga and the discipline of India's ancient martial art.",
       'My mission is simple: to help women become stronger, healthier, happier and more connected to themselves.',
     ],
+    /** Short facts beside the bio. `icon` picks the symbol in the purple box; `badge` shows text instead. */
     highlights: [
-      { title: 'Yoga Alliance (USA)', detail: 'Certified yoga teacher' },
-      { title: 'Kalaripayattu', detail: "Practitioner of India's ancient martial art" },
-      { title: '300+ students', detail: 'Guided over 4+ years of teaching' },
-      { title: 'Fitness & corporate', detail: 'Strength training and workplace sessions' },
+      { icon: 'award', title: 'Yoga Alliance (USA)', detail: 'Certified yoga teacher' },
+      { icon: 'kalari', title: 'Kalaripayattu', detail: "Practitioner of India's ancient martial art", short: "India's ancient martial art" },
+      { icon: 'users', badge: '300+', title: 'Students guided', detail: 'Over 4+ years of teaching', short: 'Over 4+ years' },
+      { icon: 'heart', title: 'Fitness, corporate & events', detail: 'Strength, workplace and event sessions', short: 'Workplace and event sessions' },
+    ] as { icon: 'award' | 'kalari' | 'users' | 'heart'; badge?: string; title: string; detail: string; short?: string }[],
+    credentials: [
+      { code: 'RYT 200', name: 'Registered Yoga Teacher', hours: '200' },
+      { code: 'CYT 500', name: 'Certified Yoga Teacher', hours: '500' },
+      { code: 'YACEP', name: 'Face Yoga Teacher', hours: '30' },
     ],
   },
 
@@ -100,7 +125,7 @@ export const siteConfig = {
   seo: {
     title: 'Yoga With Karuna | Live Online Yoga Classes for Women',
     description:
-      'Women-only live online yoga with Yoga Alliance certified teacher Karuna. Regular yoga, face yoga and meditation classes on Google Meet, Monday to Saturday (IST).',
+      'Women-only live online yoga with Yoga Alliance certified teacher Karuna. Regular yoga, face yoga and meditation classes on Google Meet / Zoom, Monday to Saturday (IST).',
   },
 
   nav: [
@@ -111,9 +136,12 @@ export const siteConfig = {
     { label: 'Contact', href: '#contact' },
   ] satisfies NavLink[],
 
+  classCardStyle: 'photo' as ClassCardStyle,
+  aboutHighlightStyle: 'columns' as AboutHighlightStyle,
+
   schedule: {
     timezone: 'IST (UTC+5:30)',
-    platform: 'Google Meet',
+    platform: 'Google Meet / Zoom',
   },
 
   classes: [
@@ -134,6 +162,7 @@ export const siteConfig = {
         'Weight management support',
       ],
       theme: 'plum',
+      photo: { src: regularYogaPhoto, alt: 'Women practising yoga together in a sunlit studio', position: '50% 50%' },
     },
     {
       id: 'face-yoga',
@@ -152,10 +181,11 @@ export const siteConfig = {
         'Youthful appearance',
       ],
       theme: 'rose',
+      photo: { src: faceYogaPhoto, alt: 'A woman doing facial exercises', position: '50% 20%' },
     },
     {
       id: 'meditation-yoga',
-      name: 'Meditation Yoga Class',
+      name: 'Meditation Class',
       shortName: 'Meditation',
       tagline: 'Calm mind, restful sleep',
       level: 'All levels',
@@ -170,12 +200,13 @@ export const siteConfig = {
         'Emotional healing & balance',
       ],
       theme: 'indigo',
+      photo: { src: meditationPhoto, alt: 'A woman meditating in lotus pose on a mat', position: '50% 50%' },
     },
   ] satisfies ClassOffering[] as ClassOffering[],
 
   steps: [
     { title: 'Message on WhatsApp', detail: 'Tell Karuna which class interests you. She will share fees and batch availability.' },
-    { title: 'Get your Meet link', detail: 'Receive the Google Meet link and a few tips to set up your space.' },
+    { title: 'Get your class link', detail: 'Receive the Google Meet / Zoom link and a few tips to set up your space.' },
     { title: 'Join live from home', detail: 'Roll out your mat and practise live with personal guidance on your posture.' },
   ],
 
@@ -208,10 +239,10 @@ export const siteConfig = {
     {
       question: 'What do I need for an online class?',
       answer:
-        'A yoga mat, comfortable clothes, a quiet corner and a phone or laptop with Google Meet. Place your camera so Karuna can see your full body for posture corrections.',
+        'A yoga mat, comfortable clothes, a quiet corner and a phone or laptop with Google Meet / Zoom. Place your camera so Karuna can see your full body for posture corrections.',
     },
     {
-      question: 'Are the classes really women only?',
+      question: 'Are the classes women only?',
       answer: 'Yes. Every batch is exclusively for women, so you can practise in a safe, comfortable and supportive space.',
     },
     {

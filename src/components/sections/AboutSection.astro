@@ -1,14 +1,18 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../../assets/logo.png';
-import Icon from '../ui/Icon.astro';
-import { siteConfig } from '../../config/site-content';
+import AboutHighlights from '../ui/AboutHighlights.astro';
+import { siteConfig, type AboutHighlightStyle } from '../../config/site-content';
+
+interface Props {
+  /** Overrides siteConfig.aboutHighlightStyle (handy for previewing other layouts). */
+  highlightLayout?: AboutHighlightStyle;
+}
 
 const { instructor, gallery, brand } = siteConfig;
-const highlightIcons = ['award', 'sparkle', 'users', 'heart'] as const;
 ---
 
-<section id="about" class="relative overflow-x-clip bg-white py-20 sm:py-28">
+<section id={Astro.props.highlightLayout ? undefined : 'about'} class="relative overflow-x-clip bg-white py-20 sm:py-28">
   <div class="container-page grid items-center gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
     <div class="reveal relative mx-auto w-full max-w-sm lg:max-w-none">
       <div class="absolute -inset-2 -z-0 rotate-[-3deg] rounded-[2.25rem] bg-plum-soft sm:-inset-3" aria-hidden="true"></div>
@@ -37,25 +41,13 @@ const highlightIcons = ['award', 'sparkle', 'users', 'heart'] as const;
     <div class="reveal">
       <p class="eyebrow">About your teacher</p>
       <h2 class="mt-4 text-4xl font-semibold sm:text-5xl">
-        Namaste! I’m <span class="text-plum italic">{instructor.name}</span>
+        Namaskaram! I’m <span class="text-plum italic">{instructor.name}</span>
       </h2>
       <div class="mt-6 space-y-4 text-lg leading-relaxed text-muted">
         {instructor.bioParagraphs.map((p) => <p>{p}</p>)}
       </div>
 
-      <ul class="mt-10 grid gap-4 sm:grid-cols-2">
-        {instructor.highlights.map((h, i) => (
-          <li class="flex items-start gap-3.5 rounded-2xl border border-indigo/10 bg-sand p-4">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-plum text-white">
-              <Icon name={highlightIcons[i % highlightIcons.length]} class="h-5 w-5" />
-            </span>
-            <span>
-              <span class="block font-semibold text-indigo">{h.title}</span>
-              <span class="block text-sm text-muted">{h.detail}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
+      <AboutHighlights layout={Astro.props.highlightLayout} />
     </div>
   </div>
 

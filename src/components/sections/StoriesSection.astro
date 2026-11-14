@@ -16,7 +16,7 @@ import { siteConfig } from '../../config/site-content';
       </a>
     </div>
 
-    <div class="mt-12 grid gap-6 md:grid-cols-2">
+    <div class="swipe mt-12 grid gap-6 md:grid-cols-2" aria-label="Student stories, swipe to see more">
       {siteConfig.testimonials.map((t) => (
         <figure class="reveal relative flex flex-col rounded-[var(--radius-card)] bg-sand p-8 ring-1 ring-indigo/8 sm:p-10">
           <span class="absolute top-4 right-7 font-serif text-8xl leading-none text-plum/15" aria-hidden="true">“</span>
